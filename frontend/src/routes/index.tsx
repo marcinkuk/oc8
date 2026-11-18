@@ -54,14 +54,22 @@ const isTeamLead = (agents: Agent[], id: string) =>
   agents.some((a) => a.id !== id && a.supervisorId === id);
 
 function useSimClock() {
+  // The server render and the first client render must emit identical markup or
+  // React hydration throws (#418). Wall-clock time and the `Math.sin` wobble
+  // derived from it differ between the two, so both stay at epoch zero until
+  // the component has mounted; the tick loop only starts client-side.
+  const [mounted, setMounted] = useState(false);
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
+    setMounted(true);
     const iv = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(iv);
   }, []);
   return {
-    ticks: now.getTime() / 1000,
-    label: `${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })} · ${now.toLocaleDateString([], { weekday: "short", day: "2-digit", month: "short", year: "numeric" })}`,
+    ticks: mounted ? now.getTime() / 1000 : 0,
+    label: mounted
+      ? `${now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })} · ${now.toLocaleDateString([], { weekday: "short", day: "2-digit", month: "short", year: "numeric" })}`
+      : "",
   };
 }
 

@@ -25,6 +25,7 @@ import {
   type WidgetType,
 } from "@/lib/hooks";
 import { useT } from "@/lib/i18n";
+import { newId } from "@/lib/utils";
 
 export const Route = createFileRoute("/workspace")({
   component: WorkspacePage,
@@ -139,7 +140,7 @@ export function WorkspacePage() {
       return [
         ...list,
         {
-          id: crypto.randomUUID(),
+          id: newId(),
           type,
           x: 0,
           // A real bottom-row y, not react-grid-layout's `Infinity`

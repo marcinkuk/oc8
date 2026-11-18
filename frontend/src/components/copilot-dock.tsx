@@ -1,6 +1,6 @@
 import { ChevronDown, Plus, Send, Sparkles, WifiOff, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn, newId } from "@/lib/utils";
 import { ChatMarkdown } from "@/components/chat-markdown";
 import { CopilotRunActivity, CopilotStreamingAnswer } from "@/components/copilot-run-activity";
 import { RUN_COMPONENT_REGISTRY } from "@/components/run-record-card";
@@ -298,13 +298,13 @@ function CopilotDockPanel() {
     if (loadedMemberId === undefined || loadedMemberId !== memberId) return; // wait for the per-member load above to commit
     if (tabs.length > 0) return;
     if (!sessions) return;
-    const uiId = crypto.randomUUID();
+    const uiId = newId();
     setTabs([{ uiId, sessionId: sessions[0]?.id ?? null }]);
     setActiveUiId(uiId);
   }, [memberId, loadedMemberId, tabs.length, sessions]);
 
   function openNewTab() {
-    const uiId = crypto.randomUUID();
+    const uiId = newId();
     setTabs((prev) => [...prev, { uiId, sessionId: null }]);
     setActiveUiId(uiId);
   }
@@ -315,7 +315,7 @@ function CopilotDockPanel() {
       setActiveUiId(existing.uiId);
       return;
     }
-    const uiId = crypto.randomUUID();
+    const uiId = newId();
     setTabs((prev) => [...prev, { uiId, sessionId }]);
     setActiveUiId(uiId);
   }
