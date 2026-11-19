@@ -24,7 +24,10 @@ from typing import Any, Protocol, runtime_checkable
 
 import httpx
 
+from oc8.config import get_settings
+
 from oc8.modelrouter.http_errors import araise_for_status_with_body
+from oc8.modelrouter.reasoning import ThinkTagSplitter, reasoning_field, reasoning_tokens_from
 from oc8.modelrouter.types import (
     CompletionChunk,
     CompletionRequest,
@@ -67,6 +70,7 @@ def _chunk_from_openai(data: dict[str, Any]) -> CompletionChunk | None:
         chunk.usage = Usage(
             tokens_in=int(usage_raw.get("prompt_tokens", 0) or 0),
             tokens_out=int(usage_raw.get("completion_tokens", 0) or 0),
+            reasoning_tokens=reasoning_tokens_from(usage_raw, "completion_tokens_details"),
         )
         carries = True
 
@@ -79,6 +83,9 @@ def _chunk_from_openai(data: dict[str, Any]) -> CompletionChunk | None:
         delta = choice.get("delta") or {}
         if delta.get("content"):
             chunk.text = str(delta["content"])
+            carries = True
+        if reasoning := reasoning_field(delta):
+            chunk.reasoning = reasoning
             carries = True
         for raw in delta.get("tool_calls") or []:
             fn = raw.get("function") or {}
@@ -107,7 +114,10 @@ async def stream_openai_sse(
     """Stream an OpenAI-compatible chat completion as neutral chunks."""
     body = {**payload, "stream": True, "stream_options": {"include_usage": True}}
     owned = client is None
-    c = client or httpx.AsyncClient(timeout=180.0)
+    c = client or httpx.AsyncClient(timeout=get_settings().llm_request_timeout_s)
+    # Inline <think> reasoning arrives inside `content`, possibly with a tag
+    # split across two chunks; the splitter moves it to `reasoning`.
+    think = ThinkTagSplitter()
     try:
         async with c.stream("POST", url, json=body, headers=headers) as resp:
             await araise_for_status_with_body(resp)
@@ -128,8 +138,15 @@ async def stream_openai_sse(
                 if not isinstance(data, dict):
                     continue
                 chunk = _chunk_from_openai(data)
-                if chunk is not None:
-                    yield chunk
+                if chunk is None:
+                    continue
+                if chunk.text:
+                    chunk.text, inline = think.feed(chunk.text)
+                    chunk.reasoning += inline
+                yield chunk
+        held_text, held_reasoning = think.flush()
+        if held_text or held_reasoning:
+            yield CompletionChunk(text=held_text, reasoning=held_reasoning)
     finally:
         if owned:
             await c.aclose()
@@ -143,6 +160,8 @@ def chunk_from_result(result: CompletionResult) -> CompletionChunk:
     two copies drifting apart."""
     return CompletionChunk(
         text=result.text,
+        reasoning=result.reasoning or "",
+        replay_blocks=list(result.replay_blocks),
         tool_calls=[
             ToolCallDelta(
                 index=i,
