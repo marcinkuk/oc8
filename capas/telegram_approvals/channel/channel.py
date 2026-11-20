@@ -22,6 +22,7 @@ from __future__ import annotations
 import hmac
 import logging
 import re
+import time
 from collections.abc import Mapping
 from typing import Any
 
@@ -40,6 +41,47 @@ logger = logging.getLogger("oc8.plugin.telegram_approvals.channel")
 
 CHANNEL_ID = "telegram"
 API = "https://api.telegram.org"
+
+#: One Telegram API call. `poll` adds its own long-poll wait on top of this.
+_CALL_TIMEOUT_S = 10.0
+
+#: How long the resolved address list is reused before asking DNS again.
+_ADDRESSES_TTL_S = 300.0
+
+#: Telegram's endpoint address set is static; the lookup is a blocking call in
+#: an async path, so it happens once per TTL rather than per request.
+_addresses: tuple[float, list[str]] = (0.0, [])
+
+
+def _telegram_transport() -> httpx.AsyncBaseTransport | None:
+    """A transport that tries every address `api.telegram.org` resolves to.
+
+    Telegram answers on both IP families, and on some networks only one of them
+    gets through -- reliably on one host, intermittently on another. Letting
+    httpx pick whatever `getaddrinfo` listed first decides the channel's fate
+    for the life of the process. With more than one address, try them in order
+    per call instead; with one, there is nothing to choose, so hand back `None`
+    and let httpx do its own thing.
+
+    `ImportError` covers a core too old to ship `SequentialTransport`: the
+    plugin then behaves exactly as it did before.
+    """
+    global _addresses
+    now = time.monotonic()
+    if not _addresses[1] or now - _addresses[0] >= _ADDRESSES_TTL_S:
+        try:
+            from oc8.net.outbound import usable_addresses
+
+            host = API.split("//", 1)[1].split("/", 1)[0]
+            _addresses = (now, usable_addresses(host))
+        except (ImportError, OSError, ValueError):
+            _addresses = (now, [])
+    if len(_addresses[1]) < 2:
+        return None
+    from oc8.net.outbound import SequentialTransport
+
+    return SequentialTransport(_addresses[1])
+
 
 #: Telegram rejects a callback_data over 64 bytes, and silently -- the button
 #: simply never fires. A uuid plus a verdict is 43; that leaves 21 for an option
@@ -284,7 +326,9 @@ class TelegramChannel:
         )
 
     async def _post(self, method: str, payload: dict[str, Any]) -> dict[str, Any]:
-        async with httpx.AsyncClient(timeout=10) as client:
+        async with httpx.AsyncClient(
+            timeout=_CALL_TIMEOUT_S, transport=_telegram_transport()
+        ) as client:
             response = await client.post(f"{API}/bot{self._token}/{method}", json=payload)
         response.raise_for_status()
         body = response.json()

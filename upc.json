@@ -1,0 +1,422 @@
+[
+  {
+    "sha": "c01beb749866aeabf02744f7c460d4c16487ac0a",
+    "node_id": "C_kwDOUCdzxdoAKGMwMWJlYjc0OTg2NmFlYWJmMDI3NDRmN2M0NjBkNGMxNjQ4N2FjMGE",
+    "commit": {
+      "author": {
+        "name": "Justin Mester",
+        "email": "79861122+jm-opaas@users.noreply.github.com",
+        "date": "2026-11-20T10:59:35Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-11-20T10:59:35Z"
+      },
+      "message": "Merge pull request #160 from oc8-ai/dev\n\nRelease 0.17.0: merge dev into main",
+      "tree": {
+        "sha": "12d386571e66c609605d3c6d330b6e59c295c3fb",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/git/trees/12d386571e66c609605d3c6d330b6e59c295c3fb"
+      },
+      "url": "https://api.github.com/repos/oc8-ai/oc8/git/commits/c01beb749866aeabf02744f7c460d4c16487ac0a",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACgXCRC1aQ7uu5UhlAAA2EgQACiXurtTSgQ3YUG27BPPtJLU\n295ZVGlupEqpYVll801Fqhy4JJeDQYCPrOKf5ribn+yRQbJ6C27R4uYTkeFQZKTT\nlp/pJgi5f7LnyHqtjxoR7yu80aXGu8+GVZc+8YPSTk/zxdttzeDwZKokRCJ7FP7/\nXLb1dFuAdiV+9GLoyJxbJ9khDOpPI+OG68gQbY984uKETD40a9CVInqFbu+1lPcj\nFT/d5/Fq5L+YRaLJ6gQyGHESHZZQ3DoyFR2AiQnnnd8eYim0cOndr4yavqoH42P0\n3KBq5IHqip4a4dnsFBHebJPoTBXBKw3DQegBVTaWKOdHbVSjESlHeP0C07FRenua\nXfyg+Yi1dlgxKTgoiUGg2nBMhKHJ2ufvQp0bYfgBFJWoPewIr4r6kJoAEfWtmSwS\n2SZIDgzyD+Pov86464zWfXn18JV2nNdOsRI30Eehesi7PRO43+2+fML/uOno6AYu\nyFH3lB686vhX9p516emkIvdm9MtbIfKyxuKGcCiibJZLeXL67uXK0GDbLkLvgp2Q\nwj6qaltTbUhVnCEq36yMGUFJK9rjr+8Xv2W+HXKdg/GuOJgpM9sQdDVMu8GfHZOk\nGgiOjHyvsHApqb1zb0gZ413/al7j1uu/llAD0cXO9/oviWz3D67RzOgRpk43irEi\ny83vvx/zvyDCWmANboKV\n=tsn5\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 12d386571e66c609605d3c6d330b6e59c295c3fb\nparent ecbe5c8760d5b93a668ede6d593a01b5ac06506a\nparent 5e41fb677293e206cd5d0abdd27d1161bed18617\nauthor Justin Mester <79861122+jm-opaas@users.noreply.github.com> 1795172375 +0100\ncommitter GitHub <noreply@github.com> 1795172375 +0100\n\nMerge pull request #160 from oc8-ai/dev\n\nRelease 0.17.0: merge dev into main",
+        "verified_at": "2026-11-20T10:59:35Z"
+      }
+    },
+    "url": "https://api.github.com/repos/oc8-ai/oc8/commits/c01beb749866aeabf02744f7c460d4c16487ac0a",
+    "html_url": "https://github.com/oc8-ai/oc8/commit/c01beb749866aeabf02744f7c460d4c16487ac0a",
+    "comments_url": "https://api.github.com/repos/oc8-ai/oc8/commits/c01beb749866aeabf02744f7c460d4c16487ac0a/comments",
+    "author": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "ecbe5c8760d5b93a668ede6d593a01b5ac06506a",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/ecbe5c8760d5b93a668ede6d593a01b5ac06506a",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/ecbe5c8760d5b93a668ede6d593a01b5ac06506a"
+      },
+      {
+        "sha": "5e41fb677293e206cd5d0abdd27d1161bed18617",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/5e41fb677293e206cd5d0abdd27d1161bed18617",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/5e41fb677293e206cd5d0abdd27d1161bed18617"
+      }
+    ]
+  },
+  {
+    "sha": "5e41fb677293e206cd5d0abdd27d1161bed18617",
+    "node_id": "C_kwDOUCdzxdoAKDVlNDFmYjY3NzI5M2UyMDZjZDVkMGFiZGQyN2QxMTYxYmVkMTg2MTc",
+    "commit": {
+      "author": {
+        "name": "Justin Mester",
+        "email": "79861122+jm-opaas@users.noreply.github.com",
+        "date": "2026-11-20T10:46:07Z"
+      },
+      "committer": {
+        "name": "GitHub",
+        "email": "noreply@github.com",
+        "date": "2026-11-20T10:46:07Z"
+      },
+      "message": "Merge pull request #159 from oc8-ai/feat/two-factor-passkeys\n\nfeat(auth): passkeys as a second factor",
+      "tree": {
+        "sha": "12d386571e66c609605d3c6d330b6e59c295c3fb",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/git/trees/12d386571e66c609605d3c6d330b6e59c295c3fb"
+      },
+      "url": "https://api.github.com/repos/oc8-ai/oc8/git/commits/5e41fb677293e206cd5d0abdd27d1161bed18617",
+      "comment_count": 0,
+      "verification": {
+        "verified": true,
+        "reason": "valid",
+        "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsFcBAABCAAQBQJrACTvCRC1aQ7uu5UhlAAAsHMQAEN4d4rqh+PtTGh3+2PGRcIS\np3WSUKE3YGfa3h1KKHIYE0B0Hq2k6hVbLQoA87+dxUqnizpTpxxGrIz0oVWxosSg\nkr6Ab3vT5dEpJBk1k/2cqK+0B07ZIIE0Mr/ohpPLYRtvaTkUem81yZKQ76K73e6F\np+q/of/0rnuDomfFV8XCZgcDw90iWpArLgTWovQk82d8msxWuMeI5CoFgmC3tiyJ\nyZy0KTJkl9rlXez+s+5wKKo7OVFouBEzyvvIY2wFbJ+OIYXLXSR/RhZhxYm4q1Ge\n7fUTMymSQxMNWIu39kswgvjB0vNiDrtkZkHndGYEQGblOWKO85PRrc5fYFCFeDPg\nTMnyba+LbJ80pU6svix0ip7tTzXgzTydLh7r5fXkrHn/eoILzwbJAb17zOD2etRd\nI123vLDvQ79LzPyxWh3bcokWCgKh5UPGeHDhPLNODmLz5rzjhIoZz0xHwk/5tFcs\n18lPX3VADIXpVbF3PJTgONPN+s+3y5SKqhTCsmIW+IGnjo1qcAgeayO3bpMHNHBl\nww1HUF3RBkwcND3ssb57LYjcNC7sajYdYpWd8j4Bt3f9TszDpp5X952xK0gsgtFm\nNx5EL9FHOLFjvZcbWeu89fJsilD58u+xR8V6kWY1dh+mPRCfEsqBGUJhp6ViVzQ7\noeJXrF3d9+FqRSovFMiH\n=byCf\n-----END PGP SIGNATURE-----\n",
+        "payload": "tree 12d386571e66c609605d3c6d330b6e59c295c3fb\nparent db241d2edf57e521ac75a9c980b731a0ef8ee02f\nparent c4da1f99de35eab787e890f26cdbf493699df914\nauthor Justin Mester <79861122+jm-opaas@users.noreply.github.com> 1795171567 +0100\ncommitter GitHub <noreply@github.com> 1795171567 +0100\n\nMerge pull request #159 from oc8-ai/feat/two-factor-passkeys\n\nfeat(auth): passkeys as a second factor",
+        "verified_at": "2026-11-20T10:46:08Z"
+      }
+    },
+    "url": "https://api.github.com/repos/oc8-ai/oc8/commits/5e41fb677293e206cd5d0abdd27d1161bed18617",
+    "html_url": "https://github.com/oc8-ai/oc8/commit/5e41fb677293e206cd5d0abdd27d1161bed18617",
+    "comments_url": "https://api.github.com/repos/oc8-ai/oc8/commits/5e41fb677293e206cd5d0abdd27d1161bed18617/comments",
+    "author": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "web-flow",
+      "id": 19864447,
+      "node_id": "MDQ6VXNlcjE5ODY0NDQ3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19864447?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/web-flow",
+      "html_url": "https://github.com/web-flow",
+      "followers_url": "https://api.github.com/users/web-flow/followers",
+      "following_url": "https://api.github.com/users/web-flow/following{/other_user}",
+      "gists_url": "https://api.github.com/users/web-flow/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/web-flow/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/web-flow/subscriptions",
+      "organizations_url": "https://api.github.com/users/web-flow/orgs",
+      "repos_url": "https://api.github.com/users/web-flow/repos",
+      "events_url": "https://api.github.com/users/web-flow/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/web-flow/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "db241d2edf57e521ac75a9c980b731a0ef8ee02f",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/db241d2edf57e521ac75a9c980b731a0ef8ee02f",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/db241d2edf57e521ac75a9c980b731a0ef8ee02f"
+      },
+      {
+        "sha": "c4da1f99de35eab787e890f26cdbf493699df914",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/c4da1f99de35eab787e890f26cdbf493699df914",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/c4da1f99de35eab787e890f26cdbf493699df914"
+      }
+    ]
+  },
+  {
+    "sha": "c4da1f99de35eab787e890f26cdbf493699df914",
+    "node_id": "C_kwDOUCdzxdoAKGM0ZGExZjk5ZGUzNWVhYjc4N2U4OTBmMjZjZGJmNDkzNjk5ZGY5MTQ",
+    "commit": {
+      "author": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:32:03Z"
+      },
+      "committer": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:32:03Z"
+      },
+      "message": "fix(frontend): leave unavailable methods out of the two-factor policy form\n\nThe default policy lists email and passkey. On a server without a mail\nserver or HTTPS the save was refused until the admin unticked both.",
+      "tree": {
+        "sha": "12d386571e66c609605d3c6d330b6e59c295c3fb",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/git/trees/12d386571e66c609605d3c6d330b6e59c295c3fb"
+      },
+      "url": "https://api.github.com/repos/oc8-ai/oc8/git/commits/c4da1f99de35eab787e890f26cdbf493699df914",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/oc8-ai/oc8/commits/c4da1f99de35eab787e890f26cdbf493699df914",
+    "html_url": "https://github.com/oc8-ai/oc8/commit/c4da1f99de35eab787e890f26cdbf493699df914",
+    "comments_url": "https://api.github.com/repos/oc8-ai/oc8/commits/c4da1f99de35eab787e890f26cdbf493699df914/comments",
+    "author": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c1ce32df8975ba28d39793e92b96ef4ea3536512",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/c1ce32df8975ba28d39793e92b96ef4ea3536512",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/c1ce32df8975ba28d39793e92b96ef4ea3536512"
+      }
+    ]
+  },
+  {
+    "sha": "c1ce32df8975ba28d39793e92b96ef4ea3536512",
+    "node_id": "C_kwDOUCdzxdoAKGMxY2UzMmRmODk3NWJhMjhkMzk3OTNlOTJiOTZlZjRlYTM1MzY1MTI",
+    "commit": {
+      "author": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:30:33Z"
+      },
+      "committer": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:30:33Z"
+      },
+      "message": "chore: bump version to 0.17.0",
+      "tree": {
+        "sha": "25bb8c16e7b0bf7b82b0b1d42602b13ba84fbb0c",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/git/trees/25bb8c16e7b0bf7b82b0b1d42602b13ba84fbb0c"
+      },
+      "url": "https://api.github.com/repos/oc8-ai/oc8/git/commits/c1ce32df8975ba28d39793e92b96ef4ea3536512",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/oc8-ai/oc8/commits/c1ce32df8975ba28d39793e92b96ef4ea3536512",
+    "html_url": "https://github.com/oc8-ai/oc8/commit/c1ce32df8975ba28d39793e92b96ef4ea3536512",
+    "comments_url": "https://api.github.com/repos/oc8-ai/oc8/commits/c1ce32df8975ba28d39793e92b96ef4ea3536512/comments",
+    "author": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd"
+      }
+    ]
+  },
+  {
+    "sha": "9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+    "node_id": "C_kwDOUCdzxdoAKDlmMjMwODRiM2U4MTdlNmIzNzBlZjliOWFhNGVhYjQxMjVmZGE4YmQ",
+    "commit": {
+      "author": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:30:28Z"
+      },
+      "committer": {
+        "name": "Justin Mester",
+        "email": "justin.mester@opaas.cloud",
+        "date": "2026-11-20T10:30:28Z"
+      },
+      "message": "chore(i18n): regenerate the template for the passkey strings",
+      "tree": {
+        "sha": "8d0bde2871f938b39e54de93bffd27937fc3482b",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/git/trees/8d0bde2871f938b39e54de93bffd27937fc3482b"
+      },
+      "url": "https://api.github.com/repos/oc8-ai/oc8/git/commits/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/oc8-ai/oc8/commits/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+    "html_url": "https://github.com/oc8-ai/oc8/commit/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd",
+    "comments_url": "https://api.github.com/repos/oc8-ai/oc8/commits/9f23084b3e817e6b370ef9b9aa4eab4125fda8bd/comments",
+    "author": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "jm-opaas",
+      "id": 79861122,
+      "node_id": "MDQ6VXNlcjc5ODYxMTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79861122?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/jm-opaas",
+      "html_url": "https://github.com/jm-opaas",
+      "followers_url": "https://api.github.com/users/jm-opaas/followers",
+      "following_url": "https://api.github.com/users/jm-opaas/following{/other_user}",
+      "gists_url": "https://api.github.com/users/jm-opaas/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/jm-opaas/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jm-opaas/subscriptions",
+      "organizations_url": "https://api.github.com/users/jm-opaas/orgs",
+      "repos_url": "https://api.github.com/users/jm-opaas/repos",
+      "events_url": "https://api.github.com/users/jm-opaas/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/jm-opaas/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "65dc2bdb0a6fa38ba4dd5174e641134a5223e32f",
+        "url": "https://api.github.com/repos/oc8-ai/oc8/commits/65dc2bdb0a6fa38ba4dd5174e641134a5223e32f",
+        "html_url": "https://github.com/oc8-ai/oc8/commit/65dc2bdb0a6fa38ba4dd5174e641134a5223e32f"
+      }
+    ]
+  }
+]

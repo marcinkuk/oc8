@@ -151,3 +151,44 @@ async def test_pinned_transport_leaves_the_callers_request_alone() -> None:
     assert resp.request.url.host == "www.example.test"
     assert resp.next_request is not None
     assert str(resp.next_request.url) == "https://www.example.test/de"
+
+
+async def test_sequential_transport_falls_through_to_the_next_address() -> None:
+    """A connect failure on the first address is not a failure for the host."""
+    from oc8.net.outbound import SequentialTransport
+
+    seen: list[str] = []
+
+    class Stub(httpx.AsyncBaseTransport):
+        async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+            seen.append(request.url.host)
+            if len(seen) == 1:
+                raise httpx.ConnectTimeout("no route", request=request)
+            return httpx.Response(200, request=request)
+
+    transport = SequentialTransport(["1.2.3.4", "5.6.7.8"], inner=Stub())
+    async with httpx.AsyncClient(transport=transport) as client:
+        resp = await client.get("https://api.example.test/method")
+    assert seen == ["1.2.3.4", "5.6.7.8"]
+    assert resp.status_code == 200
+    assert resp.request.url.host == "api.example.test"
+
+
+async def test_sequential_transport_keeps_host_and_sni_on_the_address_it_used() -> None:
+    from oc8.net.outbound import SequentialTransport
+
+    captured: list[httpx.Request] = []
+
+    class Stub(httpx.AsyncBaseTransport):
+        async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+            captured.append(request)
+            raise httpx.ConnectError("down", request=request)
+
+    transport = SequentialTransport(["1.2.3.4", "[2001:db8::1]"], inner=Stub())
+    async with httpx.AsyncClient(transport=transport) as client:
+        with pytest.raises(httpx.ConnectError):
+            await client.get("https://api.example.test/x")
+    assert [r.url.host for r in captured] == ["1.2.3.4", "2001:db8::1"]
+    for req in captured:
+        assert req.headers["host"] == "api.example.test"
+        assert req.extensions["sni_hostname"] == "api.example.test"

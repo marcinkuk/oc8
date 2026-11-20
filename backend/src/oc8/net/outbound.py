@@ -206,6 +206,67 @@ def guard_outbound_host(host: str, resolver: Callable[[str], list[str]] | None =
     return _check_host(value, resolver)
 
 
+def usable_addresses(host: str, port: int = 443) -> list[str]:
+    """Every address of `host` worth trying, IPv6 first (RFC 8305 order).
+
+    A caller that takes only the first `getaddrinfo` answer locks onto one
+    address for the life of the client, and a host that answers unreliably on
+    one of its two families then looks like a channel that works
+    intermittently. Trying each in turn costs a failed handshake, not a failed
+    delivery.
+    """
+    seen: dict[tuple[int, str], str] = {}
+    for res in socket.getaddrinfo(host, port, type=socket.SOCK_STREAM):
+        family, ip = res[0], res[4][0]
+        seen.setdefault((family, ip), ip)
+    return [
+        form
+        for (_, _), form in sorted(
+            seen.items(), key=lambda entry: (entry[0][0] != socket.AF_INET6, entry[1])
+        )
+    ]
+
+
+class SequentialTransport(httpx.AsyncBaseTransport):
+    """Try a list of already-checked addresses in order, on every request.
+
+    A connection error on one address is not an error for the host. This is
+    `PinnedTransport` for several addresses: same pinning of Host and SNI, but
+    it falls through to the next address instead of failing on the first. It
+    gives up the DNS-rebinding guarantee `PinnedTransport` exists to keep, so
+    it is for fixed platform endpoints the caller does not guard, not for URLs
+    a person typed in.
+    """
+
+    def __init__(self, ips: list[str], inner: httpx.AsyncBaseTransport | None = None) -> None:
+        self._ips = list(ips)
+        self._inner = inner or httpx.AsyncHTTPTransport()
+
+    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+        host = request.url.host
+        headers = httpx.Headers(request.headers)
+        headers["Host"] = host if request.url.port is None else f"{host}:{request.url.port}"
+        last: Exception | None = None
+        for ip in self._ips:
+            pinned = httpx.Request(
+                request.method,
+                request.url.copy_with(host=ip),
+                headers=headers,
+                stream=request.stream,
+                extensions={**request.extensions, "sni_hostname": host},
+            )
+            try:
+                return await self._inner.handle_async_request(pinned)
+            except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
+                last = exc
+                continue
+        assert last is not None
+        raise last
+
+    async def aclose(self) -> None:
+        await self._inner.aclose()
+
+
 class PinnedTransport(httpx.AsyncBaseTransport):
     """Connect to a fixed, already-checked IP while keeping the original Host
     header and TLS server name, so certificate checks still use the hostname."""

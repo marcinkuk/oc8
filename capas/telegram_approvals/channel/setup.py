@@ -11,7 +11,7 @@ import httpx
 
 from oc8.credentials.errors import CredentialCheckFailed
 
-from .channel import API
+from .channel import API, _telegram_transport
 
 
 async def validate(values: dict[str, str]) -> None:
@@ -20,7 +20,7 @@ async def validate(values: dict[str, str]) -> None:
     token = values.get("bot_token", "")
     if not token:
         raise CredentialCheckFailed("no bot token submitted", reason="invalid")
-    async with httpx.AsyncClient(timeout=10) as client:
+    async with httpx.AsyncClient(timeout=10, transport=_telegram_transport()) as client:
         try:
             response = await client.get(f"{API}/bot{token}/getMe")
         except httpx.HTTPError as exc:
