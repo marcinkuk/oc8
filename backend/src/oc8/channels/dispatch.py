@@ -285,6 +285,13 @@ async def decision_from(
         raise PermissionError(REFUSED) from exc
 
 
+def _reply_target(inbound: Any) -> str:
+    """Where to answer an inbound payload: the conversation it arrived in when
+    the channel named one, else the sender's account. Authorization never uses
+    this -- it keys on `external_id` alone."""
+    return getattr(inbound, "chat_id", "") or inbound.external_id
+
+
 async def tell_sender(impl: Any, external_id: str, text: str) -> None:
     """Tell the sender what happened, if the plugin can. Best-effort: the
     decision is already recorded and a silent bot must not undo it."""
@@ -378,16 +385,16 @@ async def apply_decision(
     # start telling "not yours" apart from "no such approval".
     except (PermissionError, NotYourDepartment, NotYourSayAtAll):
         await db.rollback()
-        await tell_sender(impl, decision.external_id, "You're not authorized to decide this.")
+        await tell_sender(impl, _reply_target(decision), "You're not authorized to decide this.")
         return
     except AlreadyDecided as exc:
         await db.rollback()
         when = f" ({exc.decided_at:%d.%m. %H:%M})" if exc.decided_at else ""
-        await tell_sender(impl, decision.external_id, f"Already decided: {exc.status}{when}.")
+        await tell_sender(impl, _reply_target(decision), f"Already decided: {exc.status}{when}.")
         return
     except ApprovalError:
         await db.rollback()
-        await tell_sender(impl, decision.external_id, "That couldn't be recorded.")
+        await tell_sender(impl, _reply_target(decision), "That couldn't be recorded.")
         return
 
     run_id = result.resumed_run_id
@@ -398,7 +405,7 @@ async def apply_decision(
         from oc8.runtime.intake import publish_run
 
         await publish_run(run_id=run_id, tenant_id=tenant_id)
-    await tell_sender(impl, decision.external_id, f"Recorded: {result.approval.status}.")
+    await tell_sender(impl, _reply_target(decision), f"Recorded: {result.approval.status}.")
 
 
 async def bind_from_free_text(
@@ -438,7 +445,7 @@ async def bind_from_free_text(
                 tenant_id,
             )
             return
-        await tell_sender(impl, text.external_id, REFUSED)
+        await tell_sender(impl, _reply_target(text), REFUSED)
         return
     member = await db.get(m.OrgMember, bound.member_id)
     if (
@@ -446,7 +453,7 @@ async def bind_from_free_text(
         or member.deleted_at is not None
         or not await _member_has_permission(db, member=member, permission=perm(COPILOT, MANAGE))
     ):
-        await tell_sender(impl, text.external_id, REFUSED)
+        await tell_sender(impl, _reply_target(text), REFUSED)
         return
 
     if await _answer_parked_question(
@@ -482,7 +489,7 @@ async def bind_from_free_text(
             originating_operator=None,
             for_person=member.subject,
             chat_channel=channel,
-            chat_channel_external_id=text.external_id,
+            chat_channel_external_id=_reply_target(text),
         )
     except TenantInactive:
         # No run will answer this turn, so it is not kept in the transcript
@@ -496,39 +503,40 @@ async def bind_from_free_text(
         # (see send_message's docstring): no run was ever enqueued, so
         # executor.py's terminal-state hook -- the only other place this door
         # sends a Telegram reply -- will never fire for it. Without this
-        # branch the sender is told "Bin dran..." and then simply never
+        # branch the sender is told the ack and then simply never
         # hears anything again, even though the refusal WAS correctly
         # written to the chat transcript.
-        await tell_sender(impl, text.external_id, _SECRET_REFUSAL)
+        await tell_sender(impl, _reply_target(text), _SECRET_REFUSAL)
         return
-    await tell_sender_gated(impl, text.external_id, "Bin dran, melde mich gleich.")
+    await tell_sender_gated(impl, _reply_target(text), "On it -- I'll reply here shortly.")
 
 
 #: Sent when a message went to the sender's running answer (Ruling 52's
-#: "Geht an die laufende Antwort", on a messenger).
-_STEERED = "Hab ich – geht an die laufende Antwort."  # noqa: RUF001 -- German typography
+#: "goes to the running answer", on a messenger).
+_STEERED = "Got it -- sent to my running answer."
 #: Sent when a stop word stopped the sender's running answer.
-_STOPPED = "Gestoppt."
+_STOPPED = "Stopped."
 #: Sent when the running answer's runtime takes no messages: it can only be
 #: stopped, and a second run beside it would answer the same chat twice.
 _NOT_STEERABLE = (
-    "Die laufende Antwort nimmt keine Nachrichten an. Schreib „stop“, wenn du sie abbrechen willst."
+    "The running answer takes no messages. Send \"stop\" to cancel it."
 )
 
 #: Sent when the running answer already holds the most messages it may.
 _TOO_MANY_WAITING = (
-    "Es warten schon zu viele Nachrichten auf die laufende Antwort. Warte kurz oder schreib „stop“."
+    "Too many messages are already waiting for the running answer. "
+    "Wait a moment or send \"stop\"."
 )
 
 #: Sent when the text is longer than a running answer takes.
-_TOO_LONG = "Deine Nachricht ist zu lang für die laufende Antwort (höchstens 4.000 Zeichen)."
+_TOO_LONG = "Your message is too long for the running answer (at most 4,000 characters)."
 #: Any other refusal of a message to the running answer.
-_NOT_TAKEN = "Das konnte ich nicht an die laufende Antwort geben. Versuch es noch einmal."
+_NOT_TAKEN = "I couldn't add that to the running answer. Try again."
 
 
 def _input_refusal(exc: Any) -> str:
     """What the sender is told when `add_run_input` refuses (`InputRefused.code`):
-    in German, like the rest of this door -- except the secret gate's own
+    in the door's own words -- except the secret gate's own
     sentence, which is the same at every door."""
     from oc8.runtime.clarification import SECRET_REFUSAL
 
@@ -589,10 +597,10 @@ async def _steer_running_turn(
     if text.text.strip().lower() in _ESCAPE_WORDS:
         await request_stop(db, run=run, actor_member_id=member.id, principal=None, door=channel)
         await db.commit()
-        await tell_sender_gated(impl, text.external_id, _STOPPED)
+        await tell_sender_gated(impl, _reply_target(text), _STOPPED)
         return True
     if not await run_accepts_inputs(db, run):
-        await tell_sender_gated(impl, text.external_id, _NOT_STEERABLE)
+        await tell_sender_gated(impl, _reply_target(text), _NOT_STEERABLE)
         return True
     try:
         await add_run_input(db, run=run, member=member, text=text.text)
@@ -611,19 +619,19 @@ async def _steer_running_turn(
                 {"tid": str(session.tenant_id)},
             )
             return False
-        # Refused before anything was written; said in German, and the
+        # Refused before anything was written; said plainly, and the
         # secret gate's own sentence as is, ungated, like the secret refusal
         # of a new turn.
-        await tell_sender(impl, text.external_id, _input_refusal(exc))
+        await tell_sender(impl, _reply_target(text), _input_refusal(exc))
         return True
     await db.commit()
-    await tell_sender_gated(impl, text.external_id, _STEERED)
+    await tell_sender_gated(impl, _reply_target(text), _STEERED)
     return True
 
 
-#: Sent once a messenger reply has answered a parked question. German, like
-#: the door's other acknowledgement ("Bin dran, melde mich gleich.").
-_ANSWER_TAKEN = "Danke, ich mache weiter."
+#: Sent once a messenger reply has answered a parked question, like the
+#: door's other acknowledgement ("On it -- I'll reply here shortly.").
+_ANSWER_TAKEN = "Thanks -- continuing."
 
 #: A reply that means "not an answer -- let me say something else". It starts
 #: an ordinary turn; the question stays open in oc8.
@@ -721,7 +729,7 @@ async def _answer_parked_question(
     except AnswerRefused as exc:
         # The secret gate every answer door shares: nothing was written, the
         # question stays open. The sender is told why.
-        await tell_sender(impl, text.external_id, str(exc))
+        await tell_sender(impl, _reply_target(text), str(exc))
         return True
     except QuestionNotAnswerable:
         # Raised before anything changed, and without a rollback: that would end
@@ -730,7 +738,7 @@ async def _answer_parked_question(
     except QuestionError as exc:
         await db.rollback()
         await tell_sender_gated(
-            impl, text.external_id, f"{exc}\n\n{format_for_messenger(questions)}"
+            impl, _reply_target(text), f"{exc}\n\n{format_for_messenger(questions)}"
         )
         return True
     run_id = run.id
@@ -740,7 +748,7 @@ async def _answer_parked_question(
     from oc8.runtime.intake import publish_run
 
     await publish_run(run_id=run_id, tenant_id=tenant_id)
-    await tell_sender(impl, text.external_id, _ANSWER_TAKEN)
+    await tell_sender(impl, _reply_target(text), _ANSWER_TAKEN)
     return True
 
 

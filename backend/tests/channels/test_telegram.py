@@ -101,7 +101,7 @@ def test_the_options_become_buttons_and_a_refusal_is_always_offered() -> None:
     assert rows is not None
     labels = [b["text"] for row in rows["inline_keyboard"] for b in row]
     assert labels[:2] == ["Voll erstatten", "Teilweise"]
-    assert "✖️ Ablehnen" in labels, "saying no must never require leaving the chat"
+    assert "✖️ Decline" in labels, "saying no must never require leaving the chat"
 
 
 def test_an_option_too_long_for_telegram_is_dropped_not_shipped_broken() -> None:
@@ -113,7 +113,7 @@ def test_an_option_too_long_for_telegram_is_dropped_not_shipped_broken() -> None
     assert rows is not None
     labels = [b["text"] for row in rows["inline_keyboard"] for b in row]
     assert "Sehr lange Option" not in labels
-    assert "✅ Freigeben" in labels, "a plain yes/no remains"
+    assert "✅ Approve" in labels, "a plain yes/no remains"
 
 
 def test_html_in_an_approval_cannot_break_out_of_the_message() -> None:

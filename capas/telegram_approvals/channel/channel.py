@@ -85,8 +85,8 @@ def render(notice: ApprovalNotice) -> str:
     if notice.content_withheld:
         lines += [
             "",
-            "Der Inhalt dieser Anfrage darf nicht über Telegram gehen.",
-            "Bitte in oc8 öffnen und dort entscheiden.",
+            "The content of this request may not go over Telegram.",
+            "Open oc8 to read and decide it.",
         ]
         return "\n".join(lines)[:_MAX_TEXT]
     if notice.amount_text:
@@ -94,22 +94,21 @@ def render(notice: ApprovalNotice) -> str:
     if notice.detail:
         lines += ["", _escape(notice.detail)]
     if notice.record_url:
-        # A bare URL, deliberately unlabelled: Telegram auto-links it, and this
-        # renderer's surrounding copy is historically German while capa code is
-        # English-only -- a URL needs neither language. Placed before the
-        # expiry line so the _MAX_TEXT truncation below can never cut a link in
+        # A bare URL, deliberately unlabelled: Telegram auto-links it, and a URL
+        # needs no language of its own. Placed before the expiry line so the
+        # _MAX_TEXT truncation below can never cut a link in
         # half (a half URL is worse than none).
         lines += ["", _escape(notice.record_url)]
     if notice.expires_at is not None:
-        lines += ["", f"Läuft ab: {notice.expires_at:%d.%m.%Y %H:%M}"]
+        lines += ["", f"Expires: {notice.expires_at:%d.%m.%Y %H:%M}"]
     return "\n".join(lines)[:_MAX_TEXT]
 
 
 def keyboard(notice: ApprovalNotice) -> dict[str, Any] | None:
     """The buttons, or None when there is nothing to press.
 
-    A redacted notice gets NO buttons on purpose: a button labelled "Voll
-    erstatten" tells you what the request is about even with the text removed,
+    A redacted notice gets NO buttons on purpose: an option label like
+    "Refund in full" tells you what the request is about even with the text removed,
     which is exactly what withholding it was for.
     """
     if notice.content_withheld:
@@ -126,13 +125,23 @@ def keyboard(notice: ApprovalNotice) -> dict[str, Any] | None:
     if not rows:
         rows = [
             [
-                {"text": "✅ Freigeben", "callback_data": f"{notice.approval_id}:approve"},
-                {"text": "✖️ Ablehnen", "callback_data": f"{notice.approval_id}:reject"},
+                {"text": "✅ Approve", "callback_data": f"{notice.approval_id}:approve"},
+                {"text": "✖️ Decline", "callback_data": f"{notice.approval_id}:reject"},
             ]
         ]
     else:
-        rows.append([{"text": "✖️ Ablehnen", "callback_data": f"{notice.approval_id}:reject"}])
+        rows.append([{"text": "✖️ Decline", "callback_data": f"{notice.approval_id}:reject"}])
     return {"inline_keyboard": rows}
+
+
+def _chat_id(payload: dict[str, Any]) -> str:
+    """The conversation an update arrived in, as a string, or "". In a private
+    chat Telegram's `chat.id` equals the sender's id, so replying to it there is
+    identical to replying to `from.id`; in a group it lands where it was read."""
+    chat = payload.get("chat")
+    if not isinstance(chat, dict) or chat.get("id") is None:
+        return ""
+    return str(chat["id"])
 
 
 def _sender_id(payload: dict[str, Any]) -> Any:
@@ -177,12 +186,14 @@ def decision_from_update(update: dict[str, Any]) -> tuple[ChannelDecision, str] 
         approval_uuid = _uuid.UUID(approval_id)
     except ValueError:
         return None
+    message = query.get("message")
     return (
         ChannelDecision(
             approval_id=approval_uuid,
             verdict=verdict,
             option_key=option,
             external_id=str(sender),
+            chat_id=_chat_id(message) if isinstance(message, dict) else "",
         ),
         str(query.get("id") or ""),
     )
@@ -258,7 +269,9 @@ class TelegramChannel:
         sender = _sender_id(message)
         if not text or sender is None:
             return None
-        return ChannelFreeText(text=text, external_id=str(sender))
+        return ChannelFreeText(
+            text=text, external_id=str(sender), chat_id=_chat_id(message)
+        )
 
     def capabilities(self) -> ChannelCapabilities:
         # `unsolicited=True`: unlike WhatsApp, Telegram lets a bot write to
@@ -328,13 +341,13 @@ class TelegramChannel:
         """
         if handle is None:
             return
-        said = {"approved": "freigegeben", "rejected": "abgelehnt"}.get(outcome, outcome)
+        said = {"approved": "approved", "rejected": "rejected"}.get(outcome, outcome)
         await self._post(
             "editMessageText",
             {
                 "chat_id": external_id,
                 "message_id": handle,
-                "text": f"{render(notice)}\n\n<i>Entschieden: {_escape(said)}</i>",
+                "text": f"{render(notice)}\n\n<i>Decided: {_escape(said)}</i>",
                 "parse_mode": "HTML",
             },
         )

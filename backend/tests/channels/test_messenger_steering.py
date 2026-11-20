@@ -173,7 +173,7 @@ async def test_abbrechen_stops_the_running_run(
     assert events and events[0].resource["door"] == CHANNEL
     assert inputs == [], "the stop word is not passed on as text"
     sent = impl.say.await_args
-    assert sent is not None and sent.args[1] == "Gestoppt."
+    assert sent is not None and sent.args[1] == _STOPPED
 
 
 async def test_somebody_elses_running_run_is_not_steered(
@@ -278,7 +278,7 @@ async def test_a_run_that_ended_before_the_write_gets_a_new_turn(
     runs = await _runs(app_session, tenant)
     assert len(runs) == 2 and run_id in [r.id for r in runs]
     sent = impl.say.await_args
-    assert sent is not None and sent.args[1] == "Bin dran, melde mich gleich."
+    assert sent is not None and sent.args[1] == "On it -- I'll reply here shortly."
 
 
 async def test_a_runtime_that_takes_no_messages_says_so_and_starts_nothing(
@@ -321,7 +321,7 @@ async def test_a_stop_word_stops_a_run_that_takes_no_messages(
         ).scalar_one_or_none()
     assert cancel is not None
     sent = impl.say.await_args
-    assert sent is not None and sent.args[1] == "Gestoppt."
+    assert sent is not None and sent.args[1] == _STOPPED
 
 
 async def test_a_full_queue_is_refused_in_german(

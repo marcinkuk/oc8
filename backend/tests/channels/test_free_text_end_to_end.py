@@ -445,7 +445,7 @@ async def test_an_authorized_senders_secret_looking_message_is_refused_not_acked
         )
     impl.say.assert_awaited_once()
     sent = impl.say.await_args.args[1]
-    assert sent != "Bin dran, melde mich gleich.", (
+    assert sent != "On it -- I'll reply here shortly.", (
         "the secret refusal must not be masked by the ack"
     )
     assert "credential" in sent.lower()

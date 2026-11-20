@@ -95,6 +95,12 @@ class ChannelDecision:
     reason: str | None = None
     #: The far platform's account id, resolved to an oc8 user by the binding.
     external_id: str = ""
+    #: The conversation the message arrived in, when the platform names it
+    #: separately from the sender (a Telegram group chat id). Replies go there
+    #: when set, so an answer appears where the person wrote; authorization
+    #: still keys on `external_id` alone. Empty means reply to the sender's
+    #: own chat -- which for a private Telegram chat is the same place.
+    chat_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -114,6 +120,12 @@ class ChannelFreeText:
 
     text: str
     external_id: str
+    #: The conversation the message arrived in, when the platform names it
+    #: separately from the sender (a Telegram group chat id). Replies go there
+    #: when set, so an answer appears where the person wrote; authorization
+    #: still keys on `external_id` alone. Empty means reply to the sender's
+    #: own chat -- which for a private Telegram chat is the same place.
+    chat_id: str = ""
 
 
 @dataclass(frozen=True)
