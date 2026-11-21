@@ -86,7 +86,29 @@ those go through `guard_outbound_url`.
 
 ## 4. Deploying (the live Portainer stack)
 
-### Topology (as of 2026-11-21)
+**Deploy path is Portainer, always.** The stack is a Portainer git-linked compose
+stack; `docker compose up` against the checkout creates containers Portainer does
+not own and shows up as a second, unmanaged stack in the UI. Everything below goes
+through Portainer.
+
+### Stack record
+
+| | |
+|---|---|
+| name / compose project | `oc8_agser` (Portainer uses the stack name as the project name) |
+| id | 38 (endpoint 3 = the local environment) |
+| type | 2 — Docker Compose stack |
+| git | `https://github.com/marcinkuk/oc8.git` @ `refs/heads/main`, entry point `docker-compose.yml` |
+| auto-update | interval `5m` + webhook, scheduler job registered |
+| project path | `/data/compose/38` |
+| env | 29 pairs stored on the stack record — Portainer writes them into `/data/compose/38/.env` on every deploy |
+
+`git pull` in `/data/compose/38` is not the update path: Portainer re-clones the
+repo on deploy (and on the 5-minute poll / webhook). `.env` in the project path is
+generated from the stack record, so editing it by hand is lost on the next deploy —
+change the **Env pairs on the stack** instead.
+
+### Topology
 
 ```
 browser → https://oc8.aero-gserent.com (443)
@@ -95,99 +117,90 @@ browser → https://oc8.aero-gserent.com (443)
         → frontend:3000 / backend:8099
 ```
 
-`OC8_DOMAIN` stays empty on purpose: TLS is the VPS's job. Setting a domain here
-makes the stack Caddy run its own ACME issuance, which fails (the host has no
-public 443) and takes the proxy down.
-`oc8.qkey.pro` still points at this stack through the VPS with a stale upstream
-port → `HTTP 502` with an **empty body**; the UI shows "Unexpected end of JSON
-input" because it parses that empty body. Use `https://oc8.aero-gserent.com`, or
-fix/retire the qkey vhost on the VPS.
+`OC8_DOMAIN` stays empty: TLS is the VPS's job. Setting a domain makes the stack
+Caddy run its own ACME issuance, which fails (no public 443 on this host).
+`oc8.qkey.pro` points at this stack through the VPS with a stale upstream port →
+`502` with an empty body, which the UI reports as "Unexpected end of JSON input"
+(it parses the empty body). Use `https://oc8.aero-gserent.com`, or fix the qkey
+vhost upstream on the VPS.
 
 ### Naming convention (one stack per company)
 
-Everything derived comes from the compose **project name** = the Portainer
-**stack name** = `oc8_agser`. Nothing in the compose file carries a hardcoded
-`oc8-` prefix, so a second company is a second stack with its own prefix:
+Everything derived comes from the stack name = compose project name. Nothing in
+the compose file carries a hardcoded `oc8-` prefix, so the next company is simply
+another stack with another name:
 
 | object | rule | this stack |
 |---|---|---|
 | containers | `<project>-<service>-1` | `oc8_agser-backend-1` |
 | volumes | `<project>_<key>` (keys: `pgdata`, `miniodata`, `caddy-data`, `caddy-config`, `ollama`) | `oc8_agser_pgdata` |
 | compose network | `<project>_default` | `oc8_agser_default` |
-| agent network | `name:` set from `OC8_AGENT_RUNTIME_NETWORK`, default `<project>_agents` | `oc8_agser_agents` |
-| images | `oc8-backend:latest`, `oc8-frontend:latest` — shared, **not** per-stack | unchanged |
+| agent network | `name:` from `OC8_AGENT_RUNTIME_NETWORK`, default `<project>_agents` | `oc8_agser_agents` |
+| images | `oc8-backend:latest`, `oc8-frontend:latest` — shared tags, not per-stack | unchanged |
 
-The agent network is the one object that must not drift with a rename, because
-the backend reads it from an env var rather than from compose: hence the explicit
-`networks.agents.name: ${OC8_AGENT_RUNTIME_NETWORK:-oc8_agser_agents}` — one
-variable drives both.
+The agent network is the one object that would drift on a rename, because the
+backend reads it from an env var instead of from compose — hence the explicit
+`networks.agents.name`, with the same value in the stack's Env pairs.
 
-**A project rename does not move data.** Compose derives volume names from the
-project, so `oc8` → `oc8_agser` means Postgres and Minio look for brand-new,
-empty volumes and the app silently starts from scratch. Rename therefore needs
-the copy step below, not just a redeploy.
-
-### Renaming / migrating an existing stack
+**A rename does not move data.** Compose derives volume names from the project, so
+renaming means Postgres and Minio look for brand-new empty volumes and the app
+starts from scratch. Rename = new stack + copy step, never just a new name:
 
 ```bash
-cd /data/compose/36 && git pull        # must carry `name: oc8_agser`
-docker compose -p oc8 down
-for k in pgdata miniodata caddy-data caddy-config; do
-  docker volume create oc8_agser_$k
-  docker run --rm -v oc8_oc8-$k:/from -v oc8_agser_$k:/to alpine     sh -c 'cp -a /from/. /to/ 2>/dev/null || true'
-done
-# the agent network holds only running sandboxes; recreate rather than rename
-docker network rm oc8_agents 2>/dev/null || true
-docker compose -p oc8_agser up -d --build backend frontend   # images are shared tags
+docker volume create oc8_agser_pgdata
+docker run --rm -v <old-project>_pgdata:/from -v oc8_agser_pgdata:/to alpine   sh -c 'cp -a /from/. /to/'      # same for miniodata, caddy-data, caddy-config
 ```
 
-Then re-point the agent network env if it was overridden, and check
-`docker volume ls | grep oc8_agser` shows non-empty `pgdata`. Keep the old
-`oc8_oc8-*` volumes until the new stack is confirmed healthy — they are the
-rollback. A logical dump before any of this is cheaper than a restore:
-`/data/oc8-backups/oc8-pre-rename-20261121T103341Z.dump` is the pre-rename one.
+Verify with `du -sh` and file counts on both volumes before deploying, take a
+`pg_dump` first, and keep the old volumes until the new stack is confirmed healthy.
 
-### Portainer stack 36 — git link vs. manual deploy, and why it matters
+### API routes (Portainer 2.39)
 
-Stack 36 **is** git-linked (`Type 2` compose, `GitConfig` =
-`https://github.com/marcinkuk/oc8.git` @ `refs/heads/main`, entry point
-`docker-compose.yml`, `AutoUpdate` = every 5m + webhook). Two things about it
-are worth knowing before relying on it:
+The create route is not `POST /api/stacks` — that returns `405` with an empty
+body. From the handler routes:
 
-- **The updater is not running.** The stack record references `JobID "1"`, but
-  no stack-update job exists in the scheduler (`grep` of the bolt DB finds zero),
-  so the 5-minute poll never fires. The git link is currently declarative only.
-- **The stack's `Env` pairs are stale** and Portainer rewrites
-  `/data/compose/36/.env` from them on *every* Portainer-initiated deploy. As of
-  2026-11-21 the stored pairs still say `OC8_HTTP_PORT=80`,
-  `OC8_FRONTEND_BASE_URL=http://192.168.1.134`,
-  `OC8_OAUTH_REDIRECT_BASE_URL=http://192.168.1.134`, plus an unused
-  `OC8_IMAGE_TAG=cf243f7…`. A Portainer "Deploy the stack" click therefore
-  reverts the port to 80 and the base URLs to the LAN IP — the exact state that
-  produced the broken login and the VPS `502`. That is why the current containers
-  were deployed by hand (`docker compose -p oc8 up`) from the checkout after
-  editing `.env`: it is the only path that keeps the intended port and URLs until
-  the stack's Env pairs are corrected.
+| action | route |
+|---|---|
+| create compose stack from git | `POST /api/stacks/create/standalone/repository?endpointId=3` with `Name`, `RepositoryURL`, `RepositoryReferenceName`, `ComposeFile`, `AutoUpdate`, `Env` |
+| create from literal file | `POST /api/stacks/create/standalone/string?endpointId=3` with `StackFileContent` |
+| list / inspect / delete | `GET /api/stacks?endpointId=3`, `GET/DELETE /api/stacks/{id}?endpointId=3` (add `removeVolumes=false` to keep data) |
+| redeploy from git | `PUT /api/stacks/{id}/git/redeploy?endpointId=3` |
+| autoupdate + webhook | `PUT /api/stacks/{id}` with `AutoUpdate` |
+| git webhook | `POST /api/stacks/webhooks/{webhookID}` (public) |
+| auth | `POST /api/auth` → field `jwt` (lowercase), send as `Authorization: Bearer` |
 
-Fix, and the git link becomes the normal deploy path again — either in the UI
-(Duplicate/Edit → rename to `oc8_agser`, set the env pairs, redeploy) or through
-the API (`PUT /api/stacks/36` with the corrected `EnvPairs`). Set `Name` and
-`Env` together: Portainer uses `Name` as the compose project name, so the name
-change *is* the rename, and the volume copy above must happen around it.
+Env pairs must be passed on create: compose interpolates `${OC8_*}` while loading
+the file, so a stack created without them fails with `error while interpolating
+x-backend-env.OC8_…: required variable … is missing`.
 
-- **`capas/` is bind-mounted read-only** into backend/scheduler/workers at
-  `/app/capas`. Plugin code updates with `git pull` +
-  `docker compose -p oc8_agser restart backend scheduler worker ingestion-worker`
-  — no image rebuild. Core changes (`backend/src/oc8/...`) need a rebuild:
-  `docker compose -p oc8_agser build --pull=false backend` (compose tags
-  `oc8-backend:latest`). `ghcr.io`/github.com are intermittently unreachable
-  from this host over IPv4 — a failed build is normal, retries are cheap.
-- `/data/compose/36` is Portainer's own clone (7 commits, origin = github);
-  `.env` there is untracked and survives `git pull`. Copies of this runbook live
-  outside the checkout in `/data/oc8-docs/`, because a Portainer git redeploy
-  with GitHub unreachable has previously wiped `/data/compose/36` entirely.
-- Durability: cursor and bindings live in Postgres, the secret in the secret
-  store — restarts, rebuilds, renames and redeploys never lose Telegram state.
+### Updating code
+
+- `capas/` is bind-mounted read-only into backend/scheduler/workers at `/app/capas`.
+  Plugin changes: push to `main`, then redeploy the stack (`PUT
+  /api/stacks/38/git/redeploy`) or restart the services — no image rebuild.
+- Core changes (`backend/src/oc8/...`, `frontend/`) need the image rebuilt, which
+  Portainer does during deploy. `ghcr.io`/github.com are intermittently unreachable
+  from this host over IPv4 — a failed build is normal, retry the deploy.
+- Copies of this runbook live in `/data/oc8-docs/`, outside any project path,
+  because a Portainer git redeploy with GitHub unreachable has previously wiped a
+  stack's project directory entirely.
+- Durability: cursor and bindings live in Postgres, the secret in the secret store —
+  redeploys, rebuilds and renames never lose Telegram state.
+
+### Health checks
+
+```bash
+docker ps --format '{{.Names}} {{.Status}}' | grep oc8_agser        # 11 up, 3 exited helpers
+docker logs --since 10m oc8_agser-scheduler-1 2>&1 | grep -c 'poll failed'
+docker exec oc8_agser-postgres-1 psql -U postgres -d oc8 -At -c \
+  "SET app.tenant_id='ba599d16-2cae-4027-a487-58de294d75b0'; \
+   SELECT (SELECT count(*) FROM credential WHERE credential_type='telegram_bot'), \
+          (SELECT count(*) FROM approval_channel_binding), \
+          (SELECT last_update_id FROM channel_poll_cursor);"
+curl -s -o /dev/null -w '%{http_code}\n' https://oc8.aero-gserent.com/          # 200
+curl -s -X POST https://oc8.aero-gserent.com/api/v1/auth/login \
+  -H 'content-type: application/json' -d '{"email":"x@y.z","password":"x"}'      # 401 + JSON
+```
 
 ## 5. Operating it
 
