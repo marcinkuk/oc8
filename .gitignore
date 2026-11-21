@@ -52,6 +52,7 @@ playwright-report/
 !/docs/GOOGLE_WORKSPACE.md
 !/docs/HELPDESK_AGENT.md
 !/docs/PILOT_BACKUP_RESTORE.md
+!/docs/TELEGRAM_APPROVALS.md
 !/docs/oc8_Technical_Specification.md
 !/docs/oc8_community_enterprise_feature_matrix.md
 !/docs/oc8_license_and_repo_structure.md

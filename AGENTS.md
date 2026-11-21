@@ -8,3 +8,7 @@ Guidance for AI coding agents working in this repository.
   and `cd frontend && npm run lint && npm run test:unit && npm run build`.
 - Follow existing patterns in the module you're touching rather than
   introducing a new one — see [docs/contributing/coding-guidelines.md](docs/contributing/coding-guidelines.md).
+- Telegram approvals: [docs/TELEGRAM_APPROVALS.md](docs/TELEGRAM_APPROVALS.md)
+  covers where the bot token lives, the outbound-transport design (address
+  ranking + connect-only retry — do not simplify it away), deploying the live
+  Portainer stack, and how to health-check polling.
