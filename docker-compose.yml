@@ -12,7 +12,10 @@
 # the backend was healthy, the UI was up, Redis itself was fine again minutes
 # later -- and the only symptom was that no run executed. The worker is the sole
 # process that performs work, so it is the one that must come back by itself.
-name: oc8
+# Project name. Portainer overrides this with the stack name, so the Portainer
+# stack must also be called `oc8_agser` for the two to agree. Data survives any
+# rename because the named volumes below pin their long names explicitly.
+name: oc8_agser
 
 x-backend-image: &backend-image
   build:
@@ -489,9 +492,17 @@ networks:
   agents:
     internal: true
 
+# Long names are pinned to the pre-existing `oc8_*` volumes: compose otherwise
+# derives them from the project name, so a project rename would create fresh,
+# empty volumes and the Postgres/Minio data would silently start from scratch.
 volumes:
   oc8-pgdata:
+    name: oc8_oc8-pgdata
   oc8-caddy-data:
+    name: oc8_oc8-caddy-data
   oc8-caddy-config:
+    name: oc8_oc8-caddy-config
   oc8-ollama:
+    name: oc8_oc8-ollama
   oc8-miniodata:
+    name: oc8_oc8-miniodata
