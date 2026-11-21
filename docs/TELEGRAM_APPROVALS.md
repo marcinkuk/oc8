@@ -86,37 +86,66 @@ those go through `guard_outbound_url`.
 
 ## 4. Deploying (the live Portainer stack)
 
-The stack runs on `192.168.1.134` under Portainer stack id **36**, compose
-checkout at `/data/compose/36`, project name `oc8`.
+Topology (as of 2026-11-21):
 
+```
+browser → https://oc8.aero-gserent.com (443)
+        → VPS 91.233.115.88 Caddy  — TLS terminated here, Let's Encrypt cert
+        → host 192.168.1.134:6441  — stack Caddy, plain HTTP, OC8_DOMAIN empty
+        → frontend:3000 / backend:8099
+```
+
+- Stack: Portainer stack id **36**, compose checkout `/data/compose/36`,
+  project/stack name **`oc8_agser`** (`docker-compose.yml` `name: oc8_agser`;
+  Portainer uses the stack name as the project name, so the Portainer stack must
+  carry the same name). Container names follow the project name
+  (`oc8_agser-scheduler-1` after a redeploy; the pre-rename names were
+  `oc8-scheduler-1` etc.).
+- **Volume long names are pinned** in `docker-compose.yml` to the original
+  `oc8_oc8-pgdata` / `oc8_oc8-miniodata` / caddy volumes. Without that pin a
+  project rename would derive fresh `oc8_agser_*` volumes and Postgres/Minio
+  would silently start empty. Keep those `name:` lines.
+- `.env` in `/data/compose/36`: `OC8_HTTP_PORT=6441`, `OC8_HTTPS_PORT=443`
+  (unused — no `OC8_DOMAIN`, so stack Caddy never binds TLS),
+  `OC8_DOMAIN=` (empty on purpose: TLS is the VPS's job; setting a domain here
+  makes the stack Caddy try its own ACME issuance and fail),
+  `OC8_FRONTEND_BASE_URL=https://oc8.aero-gserent.com`,
+  `OC8_OAUTH_REDIRECT_BASE_URL=https://oc8.aero-gserent.com`.
+  **Portainer rewrites `.env` from the stack's Env pairs on every redeploy** —
+  change values in the Portainer stack (PUT `/api/stacks/36` with `EnvPairs`),
+  not only in the file, or the redeploy silently reverts them.
 - **`capas/` is bind-mounted read-only** into backend/scheduler/workers at
   `/app/capas`. Plugin code therefore updates with `git pull` +
-  `docker compose -p oc8 restart backend scheduler worker ingestion-worker` —
-  no image rebuild needed for plugin-only changes. Core changes
+  `docker compose -p oc8_agser restart backend scheduler worker ingestion-worker`
+  — no image rebuild for plugin-only changes. Core changes
   (`backend/src/oc8/...`) need the image rebuilt.
-- **Image build**: `docker compose -p oc8 build --pull=false backend` (the
-  compose file tags `oc8-backend:latest`). `ghcr.io` and github.com are
+- **Image build**: `docker compose -p oc8_agser build --pull=false backend`
+  (compose tags `oc8-backend:latest`). `ghcr.io` and github.com are
   intermittently unreachable from this host over IPv4 — a failed build is
-  normal; retry (the layer cache makes retries cheap). Portainer's
-  auto-redeploy clones the repo itself; if GitHub is down mid-clone it can
-  wipe `/data/compose/36` — restore by re-cloning and re-POSTing the stack's
-  Env pairs (`POST /api/stacks/36/git` keeps 29 pairs; they were wiped once
-  this way and restored from the backup record).
-- `.env` in `/data/compose/36` exists for manual `docker compose` runs; the
-  leftover `OC8_IMAGE_TAG=cf243f7…` in it is **unused** by compose (services
-  use `oc8-backend:latest`).
+  normal; retry (layer cache makes retries cheap). Portainer's auto-redeploy
+  clones the repo itself; if GitHub is down mid-clone it can wipe
+  `/data/compose/36` — restore by re-cloning and re-POSTing the stack's Env
+  pairs (`POST /api/stacks/36/git`). Runbook copies live outside the checkout
+  in `/data/oc8-docs/` for exactly that reason.
+- `oc8.qkey.pro` still points at this same stack through the VPS but its
+  upstream port is stale → `HTTP 502` with an empty body (the UI shows
+  "Unexpected end of JSON input" because it parses that empty body). Use
+  `https://oc8.aero-gserent.com`, or fix/retire the qkey vhost on the VPS.
 - Durability: cursor and bindings live in Postgres, the secret in the secret
-  store — restarting, rebuilding, or redeploying the stack never loses the
-  Telegram connection state.
+  store — restarting, rebuilding, renaming, or redeploying never loses the
+  Telegram connection state. Pre-rename DB dump:
+  `/data/oc8-backups/oc8-pre-rename-20261121T103341Z.dump`.
 
 ## 5. Operating it
 
 Health check (one command, on the host):
 
 ```bash
-echo "fails:";  docker logs --since 10m oc8-scheduler-1 2>&1 | grep -c "poll failed" || true
-echo "ok:";     docker logs --since 10m oc8-scheduler-1 2>&1 | grep -c 'getUpdates .*200 OK' || true
-docker exec oc8-postgres-1 psql -U postgres -d oc8 -At \
+SCH=$(docker ps --format "{{.Names}}" | grep -E "scheduler-1$" | head -1)
+PG=$(docker ps --format "{{.Names}}" | grep -E "postgres-1$" | head -1)
+echo "fails:";  docker logs --since 10m "$SCH" 2>&1 | grep -c "poll failed" || true
+echo "ok:";     docker logs --since 10m "$SCH" 2>&1 | grep -c 'getUpdates .*200 OK' || true
+docker exec "$PG" psql -U postgres -d oc8 -At \
   -c "SELECT last_update_id, updated_at FROM channel_poll_cursor;"
 ```
 
@@ -133,7 +162,7 @@ docker exec oc8-postgres-1 psql -U postgres -d oc8 -At \
   env):
 
   ```bash
-  docker exec -i oc8-scheduler-1 python3 - <<'PY'
+  docker exec -i "$SCH" python3 - <<'PY'
   import asyncio, importlib.util
   spec = importlib.util.spec_from_file_location(
       "tgch", "/app/capas/telegram_approvals/channel/channel.py")
