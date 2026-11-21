@@ -13,8 +13,9 @@
 # later -- and the only symptom was that no run executed. The worker is the sole
 # process that performs work, so it is the one that must come back by itself.
 # Project name. Portainer overrides this with the stack name, so the Portainer
-# stack must also be called `oc8_agser` for the two to agree. Data survives any
-# rename because the named volumes below pin their long names explicitly.
+# stack must also be called `oc8_agser` for the two to agree. Everything derived
+# (containers `<project>-<service>-1`, volumes `<project>_<key>`, network
+# `<project>_default`) follows from that one name — per company, one stack name.
 name: oc8_agser
 
 x-backend-image: &backend-image
