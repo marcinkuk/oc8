@@ -115,7 +115,7 @@ x-backend-env: &backend-env
   # §8.5 agent isolation: route runs through a per-agent Docker container.
   OC8_AGENT_ISOLATION: ${OC8_AGENT_ISOLATION:-true}
   OC8_INTERNAL_BASE_URL: ${OC8_INTERNAL_BASE_URL:-http://backend:8099}
-  OC8_AGENT_RUNTIME_NETWORK: ${OC8_AGENT_RUNTIME_NETWORK:-oc8_agents}
+  OC8_AGENT_RUNTIME_NETWORK: ${OC8_AGENT_RUNTIME_NETWORK:-oc8_agser_agents}
   # The isolated runtime's sandbox image; ghcr.io/oc8-ai/agent-isolated is a
   # slimmer alternative (docs/DEPLOY.md).
   OC8_AGENT_RUNTIME_IMAGE: ${OC8_AGENT_RUNTIME_IMAGE:-oc8-backend:latest}
@@ -172,7 +172,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
       POSTGRES_DB: oc8
     volumes:
-      - oc8-pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
       - ./backend/docker/init-db.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d oc8"]
@@ -210,7 +210,7 @@ services:
     command:
       - '[ "$$(stat -c %u /data)" = 65532 ] || chown -R 65532:65532 /data'
     volumes:
-      - oc8-miniodata:/data
+      - miniodata:/data
     restart: "no"
 
   # Bundled S3-compatible object storage for file attachments (chat + agent
@@ -232,7 +232,7 @@ services:
       MINIO_ROOT_USER: ${OC8_S3_ACCESS_KEY:-oc8-minio}
       MINIO_ROOT_PASSWORD: ${OC8_S3_SECRET_KEY:?set OC8_S3_SECRET_KEY in .env}
     volumes:
-      - oc8-miniodata:/data
+      - miniodata:/data
     healthcheck:
       # Distroless: no curl. bash /dev/tcp is enough to know the API is up.
       test: ["CMD", "/usr/bin/bash", "-c", "echo >/dev/tcp/127.0.0.1/9000"]
@@ -470,15 +470,15 @@ services:
       OC8_DOMAIN: "${OC8_DOMAIN:-:80}"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - oc8-caddy-data:/data
-      - oc8-caddy-config:/config
+      - caddy-data:/data
+      - caddy-config:/config
 
   ollama:
     restart: unless-stopped
     profiles: ["ollama"]
     image: docker.io/ollama/ollama:latest
     volumes:
-      - oc8-ollama:/root/.ollama
+      - ollama:/root/.ollama
     # CPU-only by default. For GPU, add a deploy.resources.reservations.devices
     # block per the ollama docs.
 
@@ -489,12 +489,18 @@ networks:
   # not the database, not the internet. The container is meant to think and act
   # only through oc8's two gateways, and this is what makes that structural
   # rather than a matter of the harness behaving.
+  # Explicit name, driven by the same variable the backend reads, so the
+  # network and OC8_AGENT_RUNTIME_NETWORK cannot drift apart after a rename.
   agents:
+    name: ${OC8_AGENT_RUNTIME_NETWORK:-oc8_agser_agents}
     internal: true
 
+# Keys carry no `oc8-` prefix on purpose: docker prefixes them with the project
+# name, so a stack called `oc8_agser` gets `oc8_agser_pgdata` and the next
+# company's stack gets `<stack>_pgdata` -- one lookup, no double prefix.
 volumes:
-  oc8-pgdata:
-  oc8-caddy-data:
-  oc8-caddy-config:
-  oc8-ollama:
-  oc8-miniodata:
+  pgdata:
+  caddy-data:
+  caddy-config:
+  ollama:
+  miniodata:
