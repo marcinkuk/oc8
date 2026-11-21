@@ -53,28 +53,31 @@ _ADDRESSES_TTL_S = 300.0
 #: `_CALL_TIMEOUT_S`.
 _CONNECT_TIMEOUT_S = 3.0
 
-#: An address whose last connect failed is skipped for this long before being
-#: tried again.
-_BLACKLIST_S = 90.0
+#: An address is demoted behind the others after this many consecutive
+#: connect failures; one success moves it back up a step.
+_STREAK_PRIORITY = 2
 
 #: Telegram's endpoint address set is static; the lookup is a blocking call in
 #: an async path, so it happens once per TTL rather than per request.
 _addresses: tuple[float, list[str]] = (0.0, [])
 
-#: ip -> [monotonic of last connect ok, monotonic of last connect failure].
-#: Shared across clients, so one good call ranks that address first for the
-#: rest of the process.
-_scores: dict[str, list[float]] = {}
+#: ip -> connect-streak score: a success adds one, a failure subtracts one
+#: down to a floor, so a flaky address that keeps working is never demoted and
+#: a dead one is. Shared across clients, so one good call ranks that address
+#: for the rest of the process.
+_scores: dict[str, int] = {}
 
 
 def _record(ip: str, ok: bool) -> None:
-    row = _scores.setdefault(ip, [0.0, 0.0])
-    row[0 if ok else 1] = time.monotonic()
+    current = _scores.get(ip, 0)
+    _scores[ip] = current + 1 if ok else max(current - 1, -_STREAK_PRIORITY)
 
 
-def _rank(ip: str, now: float) -> tuple[bool, bool]:
-    ok, failed = _scores.get(ip, [0.0, 0.0])
-    return (now - failed < _BLACKLIST_S, not ok)
+def _rank(ip: str) -> int:
+    # Ascending on -score: best streak first; Python's stable sort keeps the
+    # DNS (RFC 8305) order among equal scores, which on a healthy network is
+    # the order everything ends up in anyway.
+    return -_scores.get(ip, 0)
 
 
 def _telegram_transport() -> httpx.AsyncBaseTransport | None:
@@ -90,10 +93,10 @@ def _telegram_transport() -> httpx.AsyncBaseTransport | None:
     The order comes from a scoreboard rather than DNS alone. A connect that
     hangs burns the whole connect timeout before the next address is tried, so
     on a link where one address is broken instead of refused, the RFC-order
-    first choice fails calls the other address would have served: a failed
-    address goes to the back for `_BLACKLIST_S`, and a working one stays first.
-    On a healthy network every connect succeeds on the first try and the
-    scoreboard never changes anything.
+    first choice fails calls the other address would have served. Consecutive
+    connect failures demote an address to the back of the list; successes pull
+    it forward again, so a merely flaky address is never locked out. On a
+    healthy network every connect succeeds and the DNS order is kept.
 
     `ImportError` covers a core too old to ship `SequentialTransport`: the
     plugin then behaves exactly as it did before.
@@ -108,7 +111,7 @@ def _telegram_transport() -> httpx.AsyncBaseTransport | None:
             _addresses = (now, usable_addresses(host))
         except (ImportError, OSError, ValueError):
             _addresses = (now, [])
-    ranked = sorted(_addresses[1], key=lambda ip: _rank(ip, now))
+    ranked = sorted(_addresses[1], key=_rank)
     if len(ranked) < 2:
         return None
     from oc8.net.outbound import SequentialTransport
