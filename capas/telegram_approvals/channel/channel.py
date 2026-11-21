@@ -48,9 +48,33 @@ _CALL_TIMEOUT_S = 10.0
 #: How long the resolved address list is reused before asking DNS again.
 _ADDRESSES_TTL_S = 300.0
 
+#: A connect that hangs costs the full connect timeout before the next address
+#: is tried, so it gets its own short budget; the call as a whole keeps
+#: `_CALL_TIMEOUT_S`.
+_CONNECT_TIMEOUT_S = 3.0
+
+#: An address whose last connect failed is skipped for this long before being
+#: tried again.
+_BLACKLIST_S = 90.0
+
 #: Telegram's endpoint address set is static; the lookup is a blocking call in
 #: an async path, so it happens once per TTL rather than per request.
 _addresses: tuple[float, list[str]] = (0.0, [])
+
+#: ip -> [monotonic of last connect ok, monotonic of last connect failure].
+#: Shared across clients, so one good call ranks that address first for the
+#: rest of the process.
+_scores: dict[str, list[float]] = {}
+
+
+def _record(ip: str, ok: bool) -> None:
+    row = _scores.setdefault(ip, [0.0, 0.0])
+    row[0 if ok else 1] = time.monotonic()
+
+
+def _rank(ip: str, now: float) -> tuple[bool, bool]:
+    ok, failed = _scores.get(ip, [0.0, 0.0])
+    return (now - failed < _BLACKLIST_S, not ok)
 
 
 def _telegram_transport() -> httpx.AsyncBaseTransport | None:
@@ -62,6 +86,14 @@ def _telegram_transport() -> httpx.AsyncBaseTransport | None:
     for the life of the process. With more than one address, try them in order
     per call instead; with one, there is nothing to choose, so hand back `None`
     and let httpx do its own thing.
+
+    The order comes from a scoreboard rather than DNS alone. A connect that
+    hangs burns the whole connect timeout before the next address is tried, so
+    on a link where one address is broken instead of refused, the RFC-order
+    first choice fails calls the other address would have served: a failed
+    address goes to the back for `_BLACKLIST_S`, and a working one stays first.
+    On a healthy network every connect succeeds on the first try and the
+    scoreboard never changes anything.
 
     `ImportError` covers a core too old to ship `SequentialTransport`: the
     plugin then behaves exactly as it did before.
@@ -76,11 +108,12 @@ def _telegram_transport() -> httpx.AsyncBaseTransport | None:
             _addresses = (now, usable_addresses(host))
         except (ImportError, OSError, ValueError):
             _addresses = (now, [])
-    if len(_addresses[1]) < 2:
+    ranked = sorted(_addresses[1], key=lambda ip: _rank(ip, now))
+    if len(ranked) < 2:
         return None
     from oc8.net.outbound import SequentialTransport
 
-    return SequentialTransport(_addresses[1])
+    return SequentialTransport(ranked, on_attempt=_record)
 
 
 #: Telegram rejects a callback_data over 64 bytes, and silently -- the button

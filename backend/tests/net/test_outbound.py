@@ -192,3 +192,40 @@ async def test_sequential_transport_keeps_host_and_sni_on_the_address_it_used() 
     for req in captured:
         assert req.headers["host"] == "api.example.test"
         assert req.extensions["sni_hostname"] == "api.example.test"
+
+
+async def test_sequential_transport_reports_each_attempt() -> None:
+    from oc8.net.outbound import SequentialTransport
+
+    attempts: list[tuple[str, bool]] = []
+
+    class Stub(httpx.AsyncBaseTransport):
+        async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+            if request.url.host == "1.2.3.4":
+                raise httpx.ConnectTimeout("no route", request=request)
+            return httpx.Response(200, request=request)
+
+    transport = SequentialTransport(
+        ["1.2.3.4", "5.6.7.8"], inner=Stub(), on_attempt=lambda ip, ok: attempts.append((ip, ok))
+    )
+    async with httpx.AsyncClient(transport=transport) as client:
+        await client.get("https://api.example.test/method")
+    assert attempts == [("1.2.3.4", False), ("5.6.7.8", True)]
+
+
+async def test_sequential_transport_caps_the_time_spent_on_one_dead_address() -> None:
+    """A hanging connect must not consume the request timeout before the next
+    address is tried — each attempt carries its own connect budget."""
+    from oc8.net.outbound import SequentialTransport
+
+    seen: list[dict] = []
+
+    class Stub(httpx.AsyncBaseTransport):
+        async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+            seen.append(request.extensions.get("timeout", {}))
+            return httpx.Response(200, request=request)
+
+    transport = SequentialTransport(["1.2.3.4"], inner=Stub(), connect_timeout=2.5)
+    async with httpx.AsyncClient(transport=transport, timeout=10.0) as client:
+        await client.get("https://api.example.test/method")
+    assert seen[0]["connect"] == 2.5

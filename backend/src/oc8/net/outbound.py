@@ -236,10 +236,24 @@ class SequentialTransport(httpx.AsyncBaseTransport):
     gives up the DNS-rebinding guarantee `PinnedTransport` exists to keep, so
     it is for fixed platform endpoints the caller does not guard, not for URLs
     a person typed in.
+
+    `connect_timeout` bounds what one dead address can cost: httpx would
+    otherwise let a hanging connect consume the request timeout before the next
+    address is ever tried. `on_attempt(ip, ok)` lets a caller rank the addresses
+    across requests so a known-dead one is not tried first every time.
     """
 
-    def __init__(self, ips: list[str], inner: httpx.AsyncBaseTransport | None = None) -> None:
+    def __init__(
+        self,
+        ips: list[str],
+        inner: httpx.AsyncBaseTransport | None = None,
+        *,
+        connect_timeout: float = 3.0,
+        on_attempt: Callable[[str, bool], None] | None = None,
+    ) -> None:
         self._ips = list(ips)
+        self._connect_timeout = connect_timeout
+        self._on_attempt = on_attempt
         self._inner = inner or httpx.AsyncHTTPTransport()
 
     async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
@@ -253,13 +267,22 @@ class SequentialTransport(httpx.AsyncBaseTransport):
                 request.url.copy_with(host=ip),
                 headers=headers,
                 stream=request.stream,
-                extensions={**request.extensions, "sni_hostname": host},
+                extensions={
+                    **request.extensions,
+                    "sni_hostname": host,
+                    "timeout": {**request.extensions.get("timeout", {}), "connect": self._connect_timeout},
+                },
             )
             try:
-                return await self._inner.handle_async_request(pinned)
+                response = await self._inner.handle_async_request(pinned)
             except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
+                if self._on_attempt is not None:
+                    self._on_attempt(ip, False)
                 last = exc
                 continue
+            if self._on_attempt is not None:
+                self._on_attempt(ip, True)
+            return response
         assert last is not None
         raise last
 
