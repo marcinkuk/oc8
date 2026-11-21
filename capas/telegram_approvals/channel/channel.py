@@ -19,6 +19,7 @@ being somebody else's system:
 
 from __future__ import annotations
 
+import asyncio
 import hmac
 import logging
 import re
@@ -44,6 +45,12 @@ API = "https://api.telegram.org"
 
 #: One Telegram API call. `poll` adds its own long-poll wait on top of this.
 _CALL_TIMEOUT_S = 10.0
+
+#: Whole-call retries while the failure is the network, and the wait between
+#: them. The addresses here fail about half of all connects; three attempts
+#: turn a coin flip into a reliable call.
+_CALL_ATTEMPTS = 3
+_RETRY_WAIT_S = 0.5
 
 #: How long the resolved address list is reused before asking DNS again.
 _ADDRESSES_TTL_S = 300.0
@@ -362,15 +369,40 @@ class TelegramChannel:
         )
 
     async def _post(self, method: str, payload: dict[str, Any]) -> dict[str, Any]:
-        async with httpx.AsyncClient(
-            timeout=_CALL_TIMEOUT_S, transport=_telegram_transport()
-        ) as client:
-            response = await client.post(f"{API}/bot{self._token}/{method}", json=payload)
-        response.raise_for_status()
-        body = response.json()
-        if not body.get("ok"):
-            raise RuntimeError(f"telegram refused {method}: {body.get('description')}")
-        return body.get("result") or {}
+        """One Telegram API call, retried while the network is the problem.
+
+        A transport that falls through every address still raises when all of
+        them fail, and on a link where the address itself answers only some
+        connects that is a coin flip per call -- unacceptable for the calls that
+        carry a verdict back to the person waiting for it. Retrying the whole
+        call gives the address another chance; a refusal from Telegram itself is
+        never retried.
+        """
+        last: Exception | None = None
+        for attempt in range(_CALL_ATTEMPTS):
+            if attempt:
+                await asyncio.sleep(_RETRY_WAIT_S)
+            try:
+                async with httpx.AsyncClient(
+                    timeout=_CALL_TIMEOUT_S, transport=_telegram_transport()
+                ) as client:
+                    response = await client.post(
+                        f"{API}/bot{self._token}/{method}", json=payload
+                    )
+            except (httpx.ConnectError, httpx.ConnectTimeout) as exc:
+                # Only the connect phase is retried: a failure there means the
+                # request never reached Telegram, so repeating it cannot
+                # duplicate a message. A timeout after the request was sent is
+                # not safe to repeat.
+                last = exc
+                continue
+            response.raise_for_status()
+            body = response.json()
+            if not body.get("ok"):
+                raise RuntimeError(f"telegram refused {method}: {body.get('description')}")
+            return body.get("result") or {}
+        assert last is not None
+        raise last
 
     async def poll(self, *, offset: int) -> tuple[list[dict[str, Any]], int]:
         """Fetch whatever Telegram has queued since `offset`, for a deployment
