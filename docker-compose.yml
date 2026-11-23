@@ -53,6 +53,11 @@ x-backend-env: &backend-env
   OC8_S3_REGION: ${OC8_S3_REGION:-us-east-1}
   OC8_JWT_SECRET: ${OC8_JWT_SECRET:?set OC8_JWT_SECRET in .env}
   OC8_SECRET_KEK: ${OC8_SECRET_KEK:?set OC8_SECRET_KEK in .env}
+  # How long a signed-in session stays valid (see .env.example). The default
+  # here is the value oc8.config ships with, so leaving .env untouched keeps
+  # the previous behaviour; a deployment lengthens the session through stack
+  # env rather than by editing code.
+  OC8_JWT_TTL_SECONDS: ${OC8_JWT_TTL_SECONDS:-3600}
   # Externally reachable base URL of this stack (Caddy, not the backend
   # container's own internal port) -- used for OAuth redirect URIs and for
   # displaying an inbound webhook trigger's URL. Unset, these silently fall
