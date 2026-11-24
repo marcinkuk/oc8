@@ -11,7 +11,6 @@ from typing import Any
 import httpx
 
 from oc8.config import get_settings
-
 from oc8.modelrouter.http_errors import araise_for_status_with_body, raise_for_status_with_body
 from oc8.modelrouter.levels import EFFORT_FOR_LEVEL
 from oc8.modelrouter.reasoning import ThinkTagSplitter, split_think_tags
@@ -216,7 +215,7 @@ class OllamaAdapter:
                         yield chunk
 
     async def embed(self, text: str, model: str) -> list[float]:
-        async with httpx.AsyncClient(timeout=get_settings().llm_request_timeout_s) as client:
+        async with httpx.AsyncClient(timeout=60.0) as client:
             resp = await client.post(
                 f"{self._base_url}/api/embeddings", json={"model": model, "prompt": text}
             )

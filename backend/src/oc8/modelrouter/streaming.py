@@ -25,7 +25,6 @@ from typing import Any, Protocol, runtime_checkable
 import httpx
 
 from oc8.config import get_settings
-
 from oc8.modelrouter.http_errors import araise_for_status_with_body
 from oc8.modelrouter.reasoning import ThinkTagSplitter, reasoning_field, reasoning_tokens_from
 from oc8.modelrouter.types import (

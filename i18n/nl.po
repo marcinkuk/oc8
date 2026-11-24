@@ -7,71 +7,99 @@ msgstr ""
 "X-Native-Name: Nederlands\n"
 "X-Flag: 🇳🇱\n"
 
-#, fuzzy
 msgid " (opens in a new tab)"
 msgstr " (opent in een nieuw tabblad)"
 
-#, fuzzy
 msgid " of "
 msgstr " van "
 
-#, fuzzy
 msgid "— no agent"
 msgstr "— geen agent"
 
-#, fuzzy
 msgid "— none —"
 msgstr "— geen —"
 
-#, fuzzy
 msgid "— required to reject"
 msgstr "— vereist om af te wijzen"
 
-#, fuzzy
 msgid "(empty)"
 msgstr "(leeg)"
 
-#, fuzzy
 msgid "(optional)"
 msgstr "(optioneel)"
 
-#, fuzzy
 msgid "(requires settings:manage)"
 msgstr "(vereist settings:manage)"
+
+#, fuzzy
+msgid "{count} departments"
+msgstr "Geen afdeling"
+
+#, fuzzy
+msgid "{field} is required."
+msgstr "Provider is verplicht"
+
+msgid "{from}–{to} of {total}"
+msgstr ""
 
 #, fuzzy
 msgid "{label} may write content to knowledge bases"
 msgstr "{label} mag inhoud naar kennisbanken schrijven"
 
 #, fuzzy
+msgid "{n} selected"
+msgstr "Alles: geselecteerd"
+
+#, fuzzy
 msgid "{n} skipped: {reasons}"
 msgstr "{n} overgeslagen: {reasons}"
 
 #, fuzzy
+msgid "{name} configured."
+msgstr "geconfigureerd"
+
+msgid "{name} is incomplete: {fields} missing"
+msgstr ""
+
+msgid "{name} is still in use ({what}). Delete it anyway? Agents that chose it then have no login until someone chooses another."
+msgstr ""
+
+msgid "{name} is still read by the data source {sources}. Choose another credential there first, then delete it."
+msgstr ""
+
+msgid "{name} is still read by the data sources {sources}. Choose another credential there first, then delete it."
+msgstr ""
+
 msgid "/do carry out the plan above"
 msgstr "/do voer het plan hierboven uit"
 
-#, fuzzy
 msgid "/summarise this conversation"
 msgstr "/summarise deze conversatie"
 
 #, fuzzy
+msgid "1 block"
+msgstr "Blokkeren"
+
+#, fuzzy
+msgid "1 department"
+msgstr "Geen afdeling"
+
+#, fuzzy
+msgid "1 record"
+msgstr "Record openen"
+
 msgid "1 unpublished change"
 msgstr "1 niet-gepubliceerde wijziging"
 
-#, fuzzy
 msgid "2FA enabled. Please sign in again."
 msgstr "2FA ingeschakeld. Log opnieuw in."
 
-#, fuzzy
 msgid "A background agent finished its run."
 msgstr "Een achtergrondagent heeft zijn run afgerond."
 
-#, fuzzy
 msgid "A background agent's run failed."
 msgstr "De run van een achtergrondagent is mislukt."
 
-#, fuzzy
 msgid "A background agent's run was interrupted."
 msgstr "De run van een achtergrondagent is onderbroken."
 
@@ -83,47 +111,54 @@ msgstr "Een Basic-gebruikersnaam mag geen dubbele punt bevatten."
 msgid "A capa installed under an earlier name could not be disabled. Disable it on the Capas page."
 msgstr "Een capa die onder een eerdere naam is geïnstalleerd, kon niet worden uitgeschakeld. Schakel hem uit op de pagina Capa's."
 
-#, fuzzy
 msgid "A Capa is anything installable in oc8 — an agent template, an MCP tool pack, a guardrail set, a department template, a runtime, or a bundle of several."
 msgstr "Een Capa is alles wat je in oc8 kunt installeren — een agentsjabloon, een MCP-toolpakket, een set vangrails, een afdelingssjabloon, een runtime, of een bundel van meerdere."
 
-#, fuzzy
+msgid "A dashboard can only go to an agent of its own department."
+msgstr ""
+
+msgid "A dashboard change may only add datasets; an existing dataset can't be removed."
+msgstr ""
+
+msgid "A dashboard change may only add fields; an existing field can't be removed."
+msgstr ""
+
+msgid "A dataset's grain can't change; add a new dataset instead."
+msgstr ""
+
 msgid "A decision was made."
 msgstr "Er is een beslissing genomen."
 
-#, fuzzy
+msgid "A field's currency can't change; add a new field instead."
+msgstr ""
+
+msgid "A field's type can't change; add a new field instead."
+msgstr ""
+
 msgid "a former member"
 msgstr "een voormalig lid"
 
-#, fuzzy
 msgid "A knowledge base can't be searched with this model – it needs a local embedding model."
 msgstr "Een kennisbank kan niet met dit model worden doorzocht – er is een lokaal embeddingmodel nodig."
 
-#, fuzzy
 msgid "A message to the running answer is text only. Remove the attachments, or send them once it's done."
 msgstr "Een bericht aan het lopende antwoord kan alleen tekst zijn. Verwijder de bijlagen, of verstuur ze zodra het klaar is."
 
-#, fuzzy
 msgid "A reset email was sent to them"
 msgstr "Er is een resetmail naar hen gestuurd"
 
-#, fuzzy
 msgid "A role is a name and a set of rights — nothing else. It applies company-wide: WHERE somebody works is decided by their seat in a department, not by their role. A change here takes effect on every holder’s next request, with the token they are already carrying."
 msgstr "Een rol is een naam en een set rechten — meer niet. De rol geldt voor het hele bedrijf: WAAR iemand werkt, bepaalt de plek (seat) in een afdeling, niet de rol. Een wijziging hier gaat in bij het eerstvolgende verzoek van elke houder, met het token dat ze al hebben."
 
-#, fuzzy
 msgid "A rollback publishes a new version rather than reactivating the old one, so the history stays in order."
 msgstr "Een rollback publiceert een nieuwe versie in plaats van de oude te heractiveren, zodat de geschiedenis in volgorde blijft."
 
-#, fuzzy
 msgid "A run is parked and nobody was asked"
 msgstr "Een run is geparkeerd en er is niemand om goedkeuring gevraagd"
 
-#, fuzzy
 msgid "A seat is granted per department by an administrator and takes effect on your next request — no new sign-in."
 msgstr "Een seat wordt per afdeling door een beheerder toegekend en gaat in bij je volgende verzoek — zonder opnieuw in te loggen."
 
-#, fuzzy
 msgid "A skill is no longer available."
 msgstr "Een skill is niet meer beschikbaar."
 
@@ -135,7 +170,6 @@ msgstr "Een skill heeft een systeem nodig dat deze agent niet zou hebben."
 msgid "A system cannot report amounts, so it cannot take an amount limit."
 msgstr "Een systeem kan geen bedragen doorgeven, dus er kan geen bedraglimiet voor gelden."
 
-#, fuzzy
 msgid "A system is no longer connected or not released for this department."
 msgstr "Een systeem is niet meer gekoppeld of niet vrijgegeven voor deze afdeling."
 
@@ -147,123 +181,93 @@ msgstr "Een systeem is uitgeschakeld of beperkt voor deze afdeling."
 msgid "A system needs a login chosen for this agent first. Set it up under Connections."
 msgstr "Voor een systeem moet eerst een login voor deze agent worden gekozen. Stel dat in onder Verbindingen."
 
-#, fuzzy
 msgid "A template only — it ticks boxes now and is not stored. There is no inheritance."
 msgstr "Alleen een sjabloon — het vinkt nu vakjes aan en wordt niet opgeslagen. Er is geen overerving."
 
-#, fuzzy
 msgid "A virtual router that picks among your connected models by task complexity."
 msgstr "Een virtuele router die op basis van taakcomplexiteit kiest uit je gekoppelde modellen."
 
-#, fuzzy
 msgid "Accept"
 msgstr "Accepteren"
 
-#, fuzzy
 msgid "Accept this suggestion to make it a live rule."
 msgstr "Accepteer deze suggestie om er een actieve regel van te maken."
 
-#, fuzzy
 msgid "Access"
 msgstr "Toegang"
 
-#, fuzzy
 msgid "Access & roles"
 msgstr "Toegang en rollen"
 
-#, fuzzy
 msgid "access and tools"
 msgstr "toegang en tools"
 
-#, fuzzy
 msgid "Access saved."
 msgstr "Toegang opgeslagen."
 
-#, fuzzy
 msgid "Account"
 msgstr "Account"
 
-#, fuzzy
 msgid "Account created successfully"
 msgstr "Account succesvol aangemaakt"
 
-#, fuzzy
 msgid "Action"
 msgstr "Actie"
 
-#, fuzzy
 msgid "Action on threshold"
 msgstr "Actie bij drempel"
 
-#, fuzzy
 msgid "Actions"
 msgstr "Acties"
 
-#, fuzzy
 msgid "Activation failed."
 msgstr "Activeren mislukt."
 
-#, fuzzy
 msgid "active"
 msgstr "actief"
 
-#, fuzzy
 msgid "Active"
 msgstr "Actief"
 
-#, fuzzy
 msgid "Active agents"
 msgstr "Actieve agents"
 
-#, fuzzy
 msgid "Active credential"
 msgstr "Actieve inloggegevens"
 
-#, fuzzy
 msgid "Activity"
 msgstr "Activiteit"
 
-#, fuzzy
 msgid "Activity feed"
 msgstr "Activiteitenfeed"
 
-#, fuzzy
 msgid "Actor type"
 msgstr "Actortype"
 
-#, fuzzy
 msgid "Add"
 msgstr "Toevoegen"
 
-#, fuzzy
 msgid "Add a model configuration"
 msgstr "Modelconfiguratie toevoegen"
 
-#, fuzzy
 msgid "Add access"
 msgstr "Toegang toevoegen"
 
-#, fuzzy
 msgid "Add another provider"
 msgstr "Nog een provider toevoegen"
 
-#, fuzzy
 msgid "Add at least one concrete model first, then configure Auto tiers."
 msgstr "Voeg eerst minstens één concreet model toe en configureer daarna de Auto-niveaus."
 
-#, fuzzy
 msgid "Add Auto router"
 msgstr "Auto-router toevoegen"
 
-#, fuzzy
 msgid "Add connection"
 msgstr "Koppeling toevoegen"
 
-#, fuzzy
 msgid "Add context"
 msgstr "Context toevoegen"
 
-#, fuzzy
 msgid "Add custom MCP server"
 msgstr "Eigen MCP-server toevoegen"
 
@@ -275,147 +279,115 @@ msgstr "Eigen server of API toevoegen"
 msgid "Add each endpoint yourself: method, path and parameters."
 msgstr "Voeg elk endpoint zelf toe: methode, pad en parameters."
 
-#, fuzzy
 msgid "Add existing source…"
 msgstr "Bestaande bron toevoegen…"
 
-#, fuzzy
 msgid "Add files or context"
 msgstr "Bestanden of context toevoegen"
 
-#, fuzzy
 msgid "Add limit"
 msgstr "Limiet toevoegen"
 
-#, fuzzy
 msgid "Add model"
 msgstr "Model toevoegen"
 
-#, fuzzy
 msgid "Add model provider"
 msgstr "Modelprovider toevoegen"
 
-#, fuzzy
 msgid "Add parameter"
 msgstr "Parameter toevoegen"
 
-#, fuzzy
 msgid "Add seat"
 msgstr "Seat toevoegen"
 
 #, fuzzy
+msgid "Add to My work"
+msgstr "Naar mijn werk"
+
 msgid "Add tool"
 msgstr "Tool toevoegen"
 
-#, fuzzy
 msgid "Add widget"
 msgstr "Widget toevoegen"
 
-#, fuzzy
 msgid "Add…"
 msgstr "Toevoegen…"
 
-#, fuzzy
 msgid "Admin"
 msgstr "Admin"
 
-#, fuzzy
 msgid "Admin API key"
 msgstr "Admin-API-sleutel"
 
-#, fuzzy
 msgid "Administrator"
 msgstr "Beheerder"
 
-#, fuzzy
 msgid "Advanced: exact role override"
 msgstr "Geavanceerd: exacte rol overschrijven"
 
-#, fuzzy
 msgid "Advanced: sign in as a specific subject/role"
 msgstr "Geavanceerd: inloggen als specifiek subject/specifieke rol"
 
-#, fuzzy
 msgid "Advanced/Raw parameters (optional)"
 msgstr "Geavanceerde/ruwe parameters (optioneel)"
 
-#, fuzzy
 msgid "After a cheap answer, escalate once if a self-check looks uncertain."
 msgstr "Escaleer na een goedkoop antwoord één keer als een zelfcontrole onzeker lijkt."
 
-#, fuzzy
 msgid "After publishing"
 msgstr "Na publicatie"
 
-#, fuzzy
 msgid "agent"
 msgstr "agent"
 
-#, fuzzy
 msgid "Agent"
 msgstr "Agent"
 
-#, fuzzy
 msgid "agent → supervisor (thinking oversight)"
 msgstr "agent → supervisor (inhoudelijk toezicht)"
 
-#, fuzzy
 msgid "Agent archived"
 msgstr "Agent gearchiveerd"
 
-#, fuzzy
 msgid "Agent assignments"
 msgstr "Agenttoewijzingen"
 
-#, fuzzy
 msgid "Agent created"
 msgstr "Agent aangemaakt"
 
-#, fuzzy
 msgid "Agent deleted"
 msgstr "Agent verwijderd"
 
-#, fuzzy
 msgid "agent identity"
 msgstr "agentidentiteit"
 
-#, fuzzy
 msgid "Agent not found, or you don't have access."
 msgstr "Agent niet gevonden, of je hebt geen toegang."
 
-#, fuzzy
 msgid "Agent restored"
 msgstr "Agent hersteld"
 
-#, fuzzy
 msgid "Agent roles"
 msgstr "Agentrollen"
 
-#, fuzzy
 msgid "Agent run"
 msgstr "Agent-run"
 
-#, fuzzy
 msgid "Agent run failed"
 msgstr "Agent-run mislukt"
 
-#, fuzzy
 msgid "Agent run finished"
 msgstr "Agent-run afgerond"
 
-#, fuzzy
 msgid "Agent run interrupted"
 msgstr "Agent-run onderbroken"
 
-#, fuzzy
 msgid "agent's suggestion"
 msgstr "suggestie van de agent"
 
-#, fuzzy
 msgid "agents"
 msgstr "agents"
 
-#, fuzzy
 msgid "Agents"
 msgstr "Agents"
 
@@ -424,54 +396,45 @@ msgid "Agents in this department get its tools; agents in other departments don'
 msgstr "Agents in deze afdeling krijgen de tools; agents in andere afdelingen niet."
 
 #, fuzzy
+msgid "Agents of these departments use this login, unless an agent has chosen another."
+msgstr "Agents in deze afdeling krijgen de tools; agents in andere afdelingen niet."
+
 msgid "Alerts"
 msgstr "Meldingen"
 
-#, fuzzy
 msgid "All"
 msgstr "Alle"
 
-#, fuzzy
 msgid "All actions (base rights)"
 msgstr "Alle acties (basisrechten)"
 
-#, fuzzy
 msgid "All agents"
 msgstr "Alle agents"
 
-#, fuzzy
 msgid "All agents, roles, and responsibilities."
 msgstr "Alle agents, rollen en verantwoordelijkheden."
 
-#, fuzzy
 msgid "All apps"
 msgstr "Alle apps"
 
-#, fuzzy
 msgid "all departments"
 msgstr "alle afdelingen"
 
-#, fuzzy
 msgid "All departments"
 msgstr "Alle afdelingen"
 
-#, fuzzy
 msgid "All knowledge bases are already linked."
 msgstr "Alle kennisbanken zijn al gekoppeld."
 
-#, fuzzy
 msgid "All runs"
 msgstr "Alle runs"
 
-#, fuzzy
 msgid "All skills already assigned."
 msgstr "Alle skills zijn al toegewezen."
 
-#, fuzzy
 msgid "All sources"
 msgstr "Alle bronnen"
 
-#, fuzzy
 msgid "All systems operational"
 msgstr "Alle systemen operationeel"
 
@@ -479,15 +442,12 @@ msgstr "Alle systemen operationeel"
 msgid "Allow"
 msgstr "Toestaan"
 
-#, fuzzy
 msgid "allowed"
 msgstr "toegestaan"
 
-#, fuzzy
 msgid "Allowed"
 msgstr "Toegestaan"
 
-#, fuzzy
 msgid "Allowed origins (optional, comma-separated)"
 msgstr "Toegestane origins (optioneel, kommagescheiden)"
 
@@ -495,39 +455,34 @@ msgstr "Toegestane origins (optioneel, kommagescheiden)"
 msgid "Allowing…"
 msgstr "Toestaan…"
 
-#, fuzzy
 msgid "Already answered"
 msgstr "Al beantwoord"
 
-#, fuzzy
 msgid "Already assigned"
 msgstr "Al toegewezen"
 
-#, fuzzy
 msgid "Already running"
 msgstr "Draait al"
 
 #, fuzzy
+msgid "Also fits: "
+msgstr "Past ook: "
+
 msgid "Also require approval for a specific tool (optional)"
 msgstr "Vereis ook goedkeuring voor een specifieke tool (optioneel)"
 
-#, fuzzy
 msgid "Amount"
 msgstr "Bedrag"
 
-#, fuzzy
 msgid "Amount (USD)"
 msgstr "Bedrag (USD)"
 
-#, fuzzy
 msgid "An agent is waiting for your decision."
 msgstr "Een agent wacht op je beslissing."
 
-#, fuzzy
 msgid "An answer is sent as text only. Remove the attachments, or send them after answering."
 msgstr "Een antwoord wordt alleen als tekst verstuurd. Verwijder de bijlagen, of verstuur ze na het antwoord."
 
-#, fuzzy
 msgid "An answer is still being written. Try again once it's done."
 msgstr "Er wordt nog een antwoord geschreven. Probeer het opnieuw zodra het klaar is."
 
@@ -535,11 +490,9 @@ msgstr "Er wordt nog een antwoord geschreven. Probeer het opnieuw zodra het klaa
 msgid "An endpoint either reads or modifies, not both:"
 msgstr "Een endpoint leest of wijzigt, niet beide:"
 
-#, fuzzy
 msgid "Analytics"
 msgstr "Analyse"
 
-#, fuzzy
 msgid "another agent"
 msgstr "een andere agent"
 
@@ -547,31 +500,24 @@ msgstr "een andere agent"
 msgid "Another tool already has this name."
 msgstr "Een andere tool heeft deze naam al."
 
-#, fuzzy
 msgid "Answer"
 msgstr "Antwoord"
 
-#, fuzzy
 msgid "Answer from what you already know. No tools, no systems touched."
 msgstr "Antwoord vanuit wat je al weet. Geen tools, geen systemen aangeraakt."
 
-#, fuzzy
 msgid "Answer in your own words"
 msgstr "Antwoord in je eigen woorden"
 
-#, fuzzy
 msgid "Answer it"
 msgstr "Beantwoorden"
 
-#, fuzzy
 msgid "Answer sent"
 msgstr "Antwoord verstuurd"
 
-#, fuzzy
 msgid "Answered as a new message"
 msgstr "Beantwoord als nieuw bericht"
 
-#, fuzzy
 msgid "Answered from the department cache, not a fresh model call"
 msgstr "Beantwoord vanuit de afdelingscache, niet via een nieuwe modelaanroep"
 
@@ -579,23 +525,18 @@ msgstr "Beantwoord vanuit de afdelingscache, niet via een nieuwe modelaanroep"
 msgid "Answers right away, barely thinks"
 msgstr "Antwoordt meteen, denkt nauwelijks na"
 
-#, fuzzy
 msgid "Answers to the questions"
 msgstr "Beantwoordt vragen"
 
-#, fuzzy
 msgid "Any origin"
 msgstr "Elke origin"
 
-#, fuzzy
 msgid "Any status"
 msgstr "Elke status"
 
-#, fuzzy
 msgid "Any system that can send a JSON POST can trigger this agent — no signature or per-source setup needed. The URL itself is the secret, so it isn't shown to anyone who isn't looking at this page."
 msgstr "Elk systeem dat een JSON-POST kan versturen, kan deze agent triggeren — geen handtekening of configuratie per bron nodig. De URL zelf is het geheim, dus hij wordt niet getoond aan wie niet op deze pagina kijkt."
 
-#, fuzzy
 msgid "Any trust level"
 msgstr "Elk vertrouwensniveau"
 
@@ -603,27 +544,25 @@ msgstr "Elk vertrouwensniveau"
 msgid "API key"
 msgstr "API-sleutel"
 
-#, fuzzy
 msgid "API key deleted"
 msgstr "API-sleutel verwijderd"
 
-#, fuzzy
 msgid "API keys"
 msgstr "API-sleutels"
 
-#, fuzzy
 msgid "App"
 msgstr "App"
 
-#, fuzzy
 msgid "Apply"
 msgstr "Toepassen"
 
 #, fuzzy
+msgid "Apply this change"
+msgstr "Niet-gepubliceerde wijzigingen"
+
 msgid "Apply this rule to the draft below (doesn't save yet)"
 msgstr "Pas deze regel toe op het concept hieronder (slaat nog niet op)"
 
-#, fuzzy
 msgid "approval"
 msgstr "goedkeuring"
 
@@ -726,6 +665,16 @@ msgstr "Gearchiveerd"
 #, fuzzy
 msgid "Arguments (JSON)"
 msgstr "Argumenten (JSON)"
+
+msgid "Artifact blocks are available in Enterprise only."
+msgstr ""
+
+#, fuzzy
+msgid "As first reported"
+msgstr "Gerapporteerd door provider"
+
+msgid "As of"
+msgstr ""
 
 #, fuzzy
 msgid "Ask an admin to allow this"
@@ -896,6 +845,10 @@ msgid "Available in chat"
 msgstr "Beschikbaar in chat"
 
 #, fuzzy
+msgid "Available in Enterprise"
+msgstr "Beschikbaar in chat"
+
+#, fuzzy
 msgid "Available in:"
 msgstr "Beschikbaar in:"
 
@@ -926,6 +879,10 @@ msgstr "Terug naar agents"
 #, fuzzy
 msgid "Back to knowledge"
 msgstr "Terug naar kennis"
+
+#, fuzzy
+msgid "Back to Live"
+msgstr "Terug naar kantoor"
 
 #, fuzzy
 msgid "Back to office"
@@ -1018,6 +975,10 @@ msgstr "Archief wordt samengesteld…"
 #, fuzzy
 msgid "Building preview…"
 msgstr "Voorbeeld wordt samengesteld…"
+
+#, fuzzy
+msgid "by a setup"
+msgstr "niet ingericht"
 
 #, fuzzy
 msgid "By Agent"
@@ -1158,6 +1119,10 @@ msgstr "Wachtwoord wijzigen"
 #, fuzzy
 msgid "Change runtime"
 msgstr "Runtime wijzigen"
+
+#, fuzzy
+msgid "Changed"
+msgstr "Wijzigen"
 
 #, fuzzy
 msgid "Changing the model takes effect for the next run. Manage model configurations under Models."
@@ -1391,6 +1356,9 @@ msgstr "Bedrijfsbreed"
 msgid "Compare"
 msgstr "Vergelijken"
 
+msgid "Complete it under Settings → Connections."
+msgstr ""
+
 #, fuzzy
 msgid "Complete these live checks before inviting pilot users."
 msgstr "Voer de live-controles uit voordat je pilotgebruikers uitnodigt."
@@ -1523,6 +1491,9 @@ msgstr "Koppelingsfout"
 msgid "Connection log"
 msgstr "Koppelingslog"
 
+msgid "Connection test failed: {detail}"
+msgstr ""
+
 #, fuzzy
 msgid "Connection works."
 msgstr "Koppeling werkt."
@@ -1566,6 +1537,9 @@ msgstr "Gekopieerd"
 #, fuzzy
 msgid "Copilot"
 msgstr "Copilot"
+
+msgid "Copilot on behalf of"
+msgstr ""
 
 #, fuzzy
 msgid "Copilot settings updated"
@@ -1824,6 +1798,10 @@ msgid "Could not remove the binding"
 msgstr "De koppeling kon niet worden verwijderd"
 
 #, fuzzy
+msgid "Could not remove this login"
+msgstr "De koppeling kon niet worden verwijderd"
+
+#, fuzzy
 msgid "Could not resolve this connection, so it isn't safe to continue -- saving now could write guardrails under the wrong key."
 msgstr "De koppeling kon niet worden bepaald, dus doorgaan is niet veilig -- opslaan nu zou vangrails onder de verkeerde sleutel kunnen wegschrijven."
 
@@ -1890,6 +1868,10 @@ msgstr "Werkruimtenaam opslaan mislukt"
 #, fuzzy
 msgid "Could not save your dashboard layout"
 msgstr "Je dashboardindeling opslaan mislukt"
+
+#, fuzzy
+msgid "Could not save your notification settings"
+msgstr "Organisatie-instellingen laden mislukt."
 
 #, fuzzy
 msgid "Could not save."
@@ -1992,6 +1974,10 @@ msgid "Couldn't load the run history."
 msgstr "Runtimegeschiedenis laden mislukt."
 
 #, fuzzy
+msgid "Couldn't mark the notification as read"
+msgstr "Instructies opslaan mislukt"
+
+#, fuzzy
 msgid "Couldn't publish"
 msgstr "Publiceren mislukt"
 
@@ -2000,8 +1986,16 @@ msgid "Couldn't reach the copilot"
 msgstr "Copilot niet bereikbaar"
 
 #, fuzzy
+msgid "Couldn't refresh"
+msgstr "Vernieuwen mislukt"
+
+#, fuzzy
 msgid "Couldn't remove skill"
 msgstr "Skill verwijderen mislukt"
+
+#, fuzzy
+msgid "Couldn't remove the share"
+msgstr "Agent hernoemen mislukt"
 
 #, fuzzy
 msgid "Couldn't remove webhook"
@@ -2038,6 +2032,10 @@ msgstr "Instructies opslaan mislukt"
 #, fuzzy
 msgid "Couldn't send answer"
 msgstr "Antwoord versturen mislukt"
+
+#, fuzzy
+msgid "Couldn't share the dashboard"
+msgstr "Je dashboardindeling opslaan mislukt"
 
 #, fuzzy
 msgid "Couldn't start run"
@@ -2120,6 +2118,10 @@ msgid "Create this agent"
 msgstr "Deze agent aanmaken"
 
 #, fuzzy
+msgid "Create this dashboard"
+msgstr "Deze agent aanmaken"
+
+#, fuzzy
 msgid "Create user"
 msgstr "Gebruiker aanmaken"
 
@@ -2192,6 +2194,10 @@ msgid "Custom MCP capa"
 msgstr "Eigen MCP-Capa"
 
 #, fuzzy
+msgid "Custom range"
+msgstr "Aangepaste waarde"
+
+#, fuzzy
 msgid "Custom server or API"
 msgstr "Eigen server of API"
 
@@ -2214,6 +2220,20 @@ msgstr "dagelijks {time}"
 #, fuzzy
 msgid "Daily role audit — compare actions vs. role scope"
 msgstr "Dagelijkse rolaudit — vergelijk acties met de rolscope"
+
+#, fuzzy
+msgid "Dashboard"
+msgstr "Takenbord"
+
+msgid "Dashboard proposal"
+msgstr ""
+
+#, fuzzy
+msgid "Dashboards"
+msgstr "Takenbord"
+
+msgid "Dashboards can only be proposed by the Copilot."
+msgstr ""
 
 #, fuzzy
 msgid "Data source"
@@ -2250,6 +2270,10 @@ msgstr "Beslist"
 #, fuzzy
 msgid "Decided a request"
 msgstr "Een verzoek beslist"
+
+#, fuzzy
+msgid "Decided approvals"
+msgstr "Open goedkeuringen"
 
 #, fuzzy
 msgid "Decided by you"
@@ -2316,6 +2340,10 @@ msgid "Delete agent"
 msgstr "Agent verwijderen"
 
 #, fuzzy
+msgid "Delete anyway"
+msgstr "Toch instellen"
+
+#, fuzzy
 msgid "Delete chat?"
 msgstr "Chat verwijderen?"
 
@@ -2330,6 +2358,14 @@ msgstr "Koppeling verwijderen?"
 #, fuzzy
 msgid "Delete credential?"
 msgstr "Inloggegevens verwijderen?"
+
+#, fuzzy
+msgid "Delete dashboard"
+msgstr "Databron verwijderen?"
+
+#, fuzzy
+msgid "Delete dashboard?"
+msgstr "Databron verwijderen?"
 
 #, fuzzy
 msgid "Delete data source?"
@@ -2472,6 +2508,14 @@ msgid "departments · jointly coordinated"
 msgstr "afdelingen · gezamenlijk gecoördineerd"
 
 #, fuzzy
+msgid "Departments for {name}"
+msgstr "Afdelingsnaam"
+
+#, fuzzy
+msgid "Departments saved."
+msgstr "Afdeling gearchiveerd"
+
+#, fuzzy
 msgid "Describe roughly what this agent should do"
 msgstr "Beschrijf ruwweg wat deze agent moet doen"
 
@@ -2510,6 +2554,10 @@ msgstr "Heeft iets gedaan"
 #, fuzzy
 msgid "Diff"
 msgstr "Diff"
+
+#, fuzzy
+msgid "Direct access"
+msgstr "Jouw toegang"
 
 #, fuzzy
 msgid "Disable"
@@ -2764,6 +2812,15 @@ msgid "Enabled"
 msgstr "Ingeschakeld"
 
 #, fuzzy
+msgid "Enabled for {count} department(s)"
+msgstr "Afdeling aanmaken mislukt"
+
+#, fuzzy
+#| msgid "all departments"
+msgid "Enabled for all departments"
+msgstr "alle afdelingen"
+
+#, fuzzy
 msgid "Enabling…"
 msgstr "Inschakelen…"
 
@@ -2972,6 +3029,11 @@ msgid "Failed"
 msgstr "Mislukt"
 
 #, fuzzy
+#| msgid "All agents"
+msgid "Failed agents"
+msgstr "Alle agents"
+
+#, fuzzy
 msgid "Fast"
 msgstr "Snel"
 
@@ -2990,6 +3052,10 @@ msgstr "Modellen ophalen…"
 #, fuzzy
 msgid "Field"
 msgstr "Veld"
+
+#, fuzzy
+msgid "Fields marked * are required."
+msgstr "Provider en modeltag zijn verplicht"
 
 #, fuzzy
 msgid "File"
@@ -3264,6 +3330,10 @@ msgid "Handoffs"
 msgstr "Overdrachten"
 
 #, fuzzy
+msgid "Hands over:"
+msgstr "Geeft door:"
+
+#, fuzzy
 msgid "hard"
 msgstr "hard"
 
@@ -3520,6 +3590,10 @@ msgid "Judging against your number for this look only — nothing is saved."
 msgstr "Beoordelen tegen een getal alleen om te kijken — er wordt niets opgeslagen."
 
 #, fuzzy
+msgid "just now"
+msgstr "Nu testen"
+
+#, fuzzy
 msgid "Keep an eye on something for me"
 msgstr "Houd iets voor me in de gaten"
 
@@ -3576,6 +3650,10 @@ msgid "Language switched to"
 msgstr "Taal gewijzigd naar"
 
 #, fuzzy
+msgid "Last 12 months"
+msgstr "Kosten deze maand?"
+
+#, fuzzy
 msgid "Last 30 days — validation only"
 msgstr "Laatste 30 dagen — alleen validatie"
 
@@ -3612,6 +3690,10 @@ msgid "Leave empty to allow any origin."
 msgstr "Laat leeg om elke origin toe te staan."
 
 #, fuzzy
+msgid "Leave empty to keep the stored password"
+msgstr "Laat leeg om het opgeslagen wachtwoord te behouden"
+
+#, fuzzy
 msgid "Leave empty to never expire."
 msgstr "Laat leeg om nooit te laten verlopen."
 
@@ -3622,6 +3704,9 @@ msgstr "Laat leeg om later in te stellen"
 #, fuzzy
 msgid "Leave unassigned"
 msgstr "Niet toegewezen laten"
+
+msgid "Legend"
+msgstr ""
 
 #, fuzzy
 msgid "Let the copilot draft this from a rough description"
@@ -3674,10 +3759,6 @@ msgstr "Gekoppeld in tenant"
 #, fuzzy
 msgid "Live"
 msgstr "Live"
-
-#, fuzzy
-msgid "Live Log"
-msgstr "Live log"
 
 #, fuzzy
 msgid "Live Log · current run"
@@ -3887,6 +3968,9 @@ msgstr "handmatig"
 msgid "Map each complexity tier to an existing model config. At least one is required."
 msgstr "Koppel elk complexiteitsniveau aan een bestaande modelconfiguratie. Minstens één is vereist."
 
+msgid "Mark all as read"
+msgstr ""
+
 #, fuzzy
 msgid "Max output tokens (optional)"
 msgstr "Max. uitvoertokens (optioneel)"
@@ -3938,6 +4022,10 @@ msgstr "Bericht"
 #, fuzzy
 msgid "Messages to this run"
 msgstr "Berichten tijdens run"
+
+#, fuzzy
+msgid "Messenger"
+msgstr "Bericht"
 
 #, fuzzy
 msgid "metered by the platform"
@@ -4136,8 +4224,15 @@ msgid "Never without approval"
 msgstr "Nooit zonder goedkeuring"
 
 #, fuzzy
+msgid "New"
+msgstr "Nieuwer"
+
+#, fuzzy
 msgid "New agent"
 msgstr "Nieuwe agent"
+
+msgid "New agent schedules run in this timezone unless they name another."
+msgstr ""
 
 #, fuzzy
 msgid "New approval requested"
@@ -4154,6 +4249,10 @@ msgstr "Nieuwe kostenlimiet"
 #, fuzzy
 msgid "New credential"
 msgstr "Nieuwe inloggegevens"
+
+#, fuzzy
+msgid "New dashboards"
+msgstr "Nieuw wachtwoord"
 
 #, fuzzy
 msgid "New department"
@@ -4186,6 +4285,10 @@ msgstr "Nieuw wachtwoord (min. 8 tekens)"
 #, fuzzy
 msgid "New project"
 msgstr "Nieuw project"
+
+#, fuzzy
+msgid "New records arrived — check the count and confirm again."
+msgstr "Het project kon niet worden opgeslagen. Controleer de naam en probeer het opnieuw."
 
 #, fuzzy
 msgid "New role"
@@ -4244,6 +4347,10 @@ msgid "Next step"
 msgstr "Volgende stap"
 
 #, fuzzy
+msgid "No access"
+msgstr "Jouw toegang"
+
+#, fuzzy
 msgid "No access token: the token URL refused or did not answer. The API itself was not called."
 msgstr "Geen toegangstoken: de token-URL weigerde of antwoordde niet. De API zelf is niet aangeroepen."
 
@@ -4300,6 +4407,10 @@ msgid "No chunks found."
 msgstr "Geen chunks gevonden."
 
 #, fuzzy
+msgid "No comparison"
+msgstr "Jouw bedrijf"
+
+#, fuzzy
 msgid "No connected data sources yet — create one first from the Sources tab, or skip this step."
 msgstr "Nog geen gekoppelde databronnen — maak er eerst een op het tabblad Bronnen, of sla deze stap over."
 
@@ -4324,7 +4435,15 @@ msgid "No credentials yet."
 msgstr "Nog geen inloggegevens."
 
 #, fuzzy
+msgid "No data"
+msgstr "Geen afdeling"
+
+#, fuzzy
 msgid "No data for this filter."
+msgstr "Geen gegevens voor dit filter."
+
+#, fuzzy
+msgid "No data for this period"
 msgstr "Geen gegevens voor dit filter."
 
 #, fuzzy
@@ -4342,6 +4461,10 @@ msgstr "Geen afdeling (strikte standaard)"
 #, fuzzy
 msgid "No department seats yet."
 msgstr "Nog geen afdelingsseats."
+
+#, fuzzy
+msgid "no department yet"
+msgstr "Nog geen afdelingen."
 
 #, fuzzy
 msgid "No departments available"
@@ -4408,12 +4531,24 @@ msgid "No login"
 msgstr "Geen login"
 
 #, fuzzy
+msgid "No login set up yet"
+msgstr "Pluginsetup mislukt."
+
+#, fuzzy
+msgid "No longer updated"
+msgstr "Rol bijgewerkt"
+
+#, fuzzy
 msgid "No mail server is configured for this instance, so the invite could not be emailed. Copy this link and send it to the new user yourself — it lets them set their own password."
 msgstr "Voor deze instantie is geen mailserver geconfigureerd, dus de uitnodiging kon niet per e-mail worden verstuurd. Kopieer de link en stuur hem zelf naar de nieuwe gebruiker — daarmee kan die zelf een wachtwoord instellen."
 
 #, fuzzy
 msgid "No mail server is configured for this instance, so the reset could not be emailed. Copy this link and send it to them yourself — it lets them set a new password."
 msgstr "Voor deze instantie is geen mailserver geconfigureerd, dus de reset kon niet per e-mail worden verstuurd. Kopieer de link en stuur hem zelf — daarmee kunnen ze een nieuw wachtwoord instellen."
+
+#, fuzzy
+msgid "No matches"
+msgstr "Hier komt niets mee overeen."
 
 #, fuzzy
 msgid "No MCP connections yet."
@@ -4442,6 +4577,14 @@ msgstr "Er is geen nieuw antwoord gestart. Probeer het opnieuw."
 #, fuzzy
 msgid "no note"
 msgstr "geen notitie"
+
+#, fuzzy
+msgid "No note for this period"
+msgstr "Geen gegevens voor dit filter."
+
+#, fuzzy
+msgid "No notifications"
+msgstr "Meldingen"
 
 #, fuzzy
 msgid "No organisation access yet."
@@ -4544,6 +4687,10 @@ msgid "No users found. Users appear here after they sign in."
 msgstr "Geen gebruikers gevonden. Gebruikers verschijnen hier nadat ze zijn ingelogd."
 
 #, fuzzy
+msgid "No values in this period"
+msgstr "Nog geen chats in het project."
+
+#, fuzzy
 msgid "no version"
 msgstr "geen versie"
 
@@ -4592,6 +4739,10 @@ msgid "Not enabled"
 msgstr "Niet ingeschakeld"
 
 #, fuzzy
+msgid "Not enabled for any department yet"
+msgstr "Nog geen afdelingen."
+
+#, fuzzy
 msgid "not for people"
 msgstr "niet voor mensen"
 
@@ -4618,6 +4769,10 @@ msgstr "Niet ingesteld"
 #, fuzzy
 msgid "not set up"
 msgstr "niet ingericht"
+
+#, fuzzy
+msgid "Not shared yet"
+msgstr "Nog geen verbruik vastgelegd."
 
 #, fuzzy
 msgid "Not tested"
@@ -4748,6 +4903,10 @@ msgid "One sentence"
 msgstr "Eén zin"
 
 #, fuzzy
+msgid "Only an organisation connection counts here. A data source feeds knowledge everyone in the organisation uses, so a personal sign-in is never used for it."
+msgstr "Hier telt alleen een verbinding van de organisatie. Een gegevensbron voedt kennis die iedereen in de organisatie gebruikt, daarom wordt je persoonlijke aanmelding er nooit voor gebruikt."
+
+#, fuzzy
 msgid "Only for me"
 msgstr "Alleen voor mij"
 
@@ -4844,8 +5003,15 @@ msgid "Organisation accesses"
 msgstr "Organisatietoegangen"
 
 #, fuzzy
+msgid "organisation account"
+msgstr "Organisatietoegangen"
+
+#, fuzzy
 msgid "Organisation ID"
 msgstr "Organisatie-ID"
+
+msgid "Organisation timezone is UTC — "
+msgstr ""
 
 #, fuzzy
 msgid "Organization"
@@ -5175,6 +5341,9 @@ msgstr "Gepubliceerd"
 msgid "Published configuration · newest first"
 msgstr "Gepubliceerde configuratie · nieuwste eerst"
 
+msgid "Push"
+msgstr ""
+
 #, fuzzy
 msgid "Push notifications aren't configured on this server yet."
 msgstr "Pushmeldingen zijn nog niet op de server geconfigureerd."
@@ -5223,6 +5392,9 @@ msgstr "Opnieuw controleren alleen lost dit niet op. Als de manipulatiebeveiligi
 msgid "Re-sync"
 msgstr "Opnieuw synchroniseren"
 
+msgid "read"
+msgstr ""
+
 #, fuzzy
 msgid "Read"
 msgstr "Lezen"
@@ -5262,6 +5434,9 @@ msgstr "Leest een webpagina …"
 #, fuzzy
 msgid "Reading archive…"
 msgstr "Archief lezen…"
+
+msgid "Reading is allowed for the rest of this chat. Every change asks you again."
+msgstr ""
 
 #, fuzzy
 msgid "Reading its instructions"
@@ -5373,6 +5548,10 @@ msgstr "Referentiemateriaal dat deze agent op verzoek kan lezen — wordt nooit 
 
 #, fuzzy
 msgid "Refresh"
+msgstr "Vernieuwen"
+
+#, fuzzy
+msgid "Refresh data"
 msgstr "Vernieuwen"
 
 #, fuzzy
@@ -5564,6 +5743,10 @@ msgid "Revoke"
 msgstr "Intrekken"
 
 #, fuzzy
+msgid "Revoke access"
+msgstr "Jouw toegang"
+
+#, fuzzy
 msgid "Revoke this connection?"
 msgstr "Deze koppeling intrekken?"
 
@@ -5618,6 +5801,10 @@ msgstr "run"
 #, fuzzy
 msgid "Run"
 msgstr "Run"
+
+#, fuzzy
+msgid "Run agent"
+msgstr "Agent starten"
 
 #, fuzzy
 msgid "Run details"
@@ -5840,6 +6027,10 @@ msgid "Search people"
 msgstr "Zoek mensen"
 
 #, fuzzy
+msgid "Search people and departments"
+msgstr "Zoek afdelingen…"
+
+#, fuzzy
 msgid "Search person or account"
 msgstr "Zoek persoon of account"
 
@@ -6008,6 +6199,10 @@ msgid "Set automatically from the selected model"
 msgstr "Automatisch ingesteld op basis van het geselecteerde model"
 
 #, fuzzy
+msgid "set it in settings"
+msgstr "Samplinginstellingen opslaan"
+
+#, fuzzy
 msgid "Set new password"
 msgstr "Nieuw wachtwoord instellen"
 
@@ -6043,6 +6238,13 @@ msgstr "Instellingen"
 msgid "Setup failed"
 msgstr "Setup mislukt"
 
+msgid "Several logins are enabled — choose one for this agent"
+msgstr ""
+
+#, fuzzy
+msgid "several logins are enabled for this department and the agent has none chosen."
+msgstr "Verwijder deze afdeling en elke agent erin definitief."
+
 #, fuzzy
 msgid "Shadow only"
 msgstr "Alleen schaduwmodus"
@@ -6054,6 +6256,9 @@ msgstr "Delen"
 #, fuzzy
 msgid "Share account"
 msgstr "Account delen"
+
+msgid "Share dashboard"
+msgstr ""
 
 #, fuzzy
 msgid "Share this invite link"
@@ -6072,7 +6277,15 @@ msgid "Shared memory & private stores."
 msgstr "Gedeeld geheugen en privéopslag."
 
 #, fuzzy
+msgid "Shared with"
+msgstr "Gedeeld met het team"
+
+#, fuzzy
 msgid "Shared with the team"
+msgstr "Gedeeld met het team"
+
+#, fuzzy
+msgid "Shared with you"
 msgstr "Gedeeld met het team"
 
 #, fuzzy
@@ -6340,6 +6553,10 @@ msgid "Steps"
 msgstr "Stappen"
 
 #, fuzzy
+msgid "Still in use"
+msgstr "Skill toegewezen"
+
+#, fuzzy
 msgid "Stop"
 msgstr "Stoppen"
 
@@ -6563,6 +6780,9 @@ msgstr "Die afdeling bestaat niet meer."
 msgid "That did not work. Please try again."
 msgstr "Dat werkte niet. Probeer het opnieuw."
 
+msgid "That earlier version of the dashboard does not exist."
+msgstr ""
+
 #, fuzzy
 msgid "That link did not name an object I can pin, so this is a new chat."
 msgstr "Die link noemde geen object dat ik kan vastzetten, dus dit is een nieuwe chat."
@@ -6584,6 +6804,10 @@ msgid "The access could not be saved. Please try again."
 msgstr "De toegang kon niet worden opgeslagen. Probeer het opnieuw."
 
 #, fuzzy
+msgid "The account could not be determined."
+msgstr "Deze run kon niet worden geladen."
+
+#, fuzzy
 msgid "The account's owner or an administrator can confirm it."
 msgstr "De eigenaar of beheerder van het account kan het bevestigen."
 
@@ -6598,6 +6822,9 @@ msgstr "De agent wacht op je invoer."
 #, fuzzy
 msgid "The agent isn't reachable right now. Your message wasn't sent – try again in a moment."
 msgstr "De agent is nu niet bereikbaar. Je bericht is niet verstuurd – probeer het zo opnieuw."
+
+msgid "The agent that should fill the dashboard no longer exists or is out of reach."
+msgstr ""
 
 #, fuzzy
 msgid "The agent was not created. Try again."
@@ -6668,6 +6895,14 @@ msgid "The check failed. Please try again."
 msgstr "De controle is mislukt. Probeer het opnieuw."
 
 #, fuzzy
+msgid "The chosen account must be connected again"
+msgstr "Het model kon niet worden gewijzigd. Probeer het opnieuw."
+
+#, fuzzy
+msgid "The chosen login is incomplete. Complete it first."
+msgstr "De login is onvolledig: vul elk veld en het geheim in."
+
+#, fuzzy
 msgid "The code expired before it was confirmed. Start again to get a new one."
 msgstr "De code is verlopen voordat hij werd bevestigd. Begin opnieuw om een nieuwe te krijgen."
 
@@ -6690,6 +6925,24 @@ msgstr "De verbinding in de afdeling die je hebt verlaten kon niet worden verwij
 #, fuzzy
 msgid "The copilot found nothing in the instructions to restrict here."
 msgstr "De Copilot vond niets in de instructies om hier te beperken."
+
+msgid "The dashboard changed since this proposal. Ask the Copilot to propose the change again from its current version."
+msgstr ""
+
+#, fuzzy
+msgid "The dashboard could not be deleted. Reload and try again."
+msgstr "De map kon niet worden geladen. Probeer het opnieuw."
+
+msgid "The dashboard moved to another department meanwhile. Reject this request so it can be requested again."
+msgstr ""
+
+#, fuzzy
+msgid "The dashboard was not saved. Try again."
+msgstr "De beslissing is niet opgeslagen. Probeer het opnieuw."
+
+#, fuzzy
+msgid "The dashboard's layout is not valid."
+msgstr "Het schema of de gebeurtenis is niet geldig."
 
 #, fuzzy
 msgid "The day somebody should only sign off offers: fork a built-in role, untick everything but four boxes, name it, assign it."
@@ -6730,6 +6983,9 @@ msgstr "De laatste synchronisatie is mislukt."
 #, fuzzy
 msgid "The link doesn't fill the code in for you — type or paste it yourself."
 msgstr "De link vult de code niet voor je in — typ of plak hem zelf."
+
+msgid "The login chosen for this agent is not confirmed — runs refuse it"
+msgstr ""
 
 #, fuzzy
 msgid "The login is incomplete: fill in every field and the secret."
@@ -6872,6 +7128,10 @@ msgid "The status of an agent handoff changed."
 msgstr "De status van de agentoverdracht is gewijzigd."
 
 #, fuzzy
+msgid "The stored values could not be loaded. Please try again later."
+msgstr "De opgeslagen waarden konden niet worden geladen. Probeer het later opnieuw."
+
+#, fuzzy
 msgid "The task board could not be loaded"
 msgstr "Het takenbord kon niet worden geladen"
 
@@ -6914,6 +7174,10 @@ msgstr "De gebruikersnaam of API-sleutel is onjuist."
 #, fuzzy
 msgid "The usual choice"
 msgstr "De gebruikelijke keuze"
+
+#, fuzzy
+msgid "their own login"
+msgstr "Geen login"
 
 #, fuzzy
 msgid "These describe what an AGENT may do in your systems. They are never given to a person, and they can only ever subtract: what an agent actually does is this, intersected with its department’s frame and with its own narrowing."
@@ -7004,6 +7268,14 @@ msgid "This base already has ingested content, so its embedding model can't chan
 msgstr "Deze kennisbank heeft al inhoud ingelezen, dus het embeddingmodel kan niet meer worden gewijzigd -- oude en nieuwe chunks zouden niet meer vergelijkbaar zijn. Verwijder de kennisbank en maak hem opnieuw aan om een ander model te gebruiken."
 
 #, fuzzy
+msgid "This block can't be shown"
+msgstr "Dit kan niet ongedaan worden gemaakt."
+
+#, fuzzy
+msgid "This block couldn't be loaded"
+msgstr "Deze run kon niet worden geladen."
+
+#, fuzzy
 msgid "This browser does not support push notifications."
 msgstr "Deze browser ondersteunt geen pushmeldingen."
 
@@ -7046,6 +7318,29 @@ msgstr "De basis-URL van deze verbinding bevat een login. Verwijder deze verbind
 #, fuzzy
 msgid "This connector can't be allowed from here."
 msgstr "Deze connector kan hier niet worden toegestaan."
+
+#, fuzzy
+msgid "This dashboard can't be shown."
+msgstr "Je dashboard kon niet worden geladen."
+
+#, fuzzy
+msgid "This dashboard couldn't be loaded."
+msgstr "Je dashboard kon niet worden geladen."
+
+#, fuzzy
+msgid "This dashboard no longer exists or is out of reach."
+msgstr "Deze chat bestaat niet meer. Start een nieuwe."
+
+#, fuzzy
+msgid "This dashboard was already saved."
+msgstr "Deze agent is al aangemaakt."
+
+msgid "This dashboard was deleted"
+msgstr ""
+
+#, fuzzy
+msgid "This dashboard was removed."
+msgstr "Geen reden vastgelegd."
 
 #, fuzzy
 msgid "This deletes every agent, run and knowledge item this company currently has and replaces them with the contents of the uploaded file. It cannot be undone."
@@ -7124,6 +7419,10 @@ msgid "This model may only answer chats, not run on a schedule or an event."
 msgstr "Dit model mag alleen in chats antwoorden, niet volgens een schema of gebeurtenis draaien."
 
 #, fuzzy
+msgid "This month"
+msgstr "deze maand gebruikt"
+
+#, fuzzy
 msgid "This proposal has expired."
 msgstr "Dit voorstel is verlopen."
 
@@ -7194,6 +7493,9 @@ msgstr "Deze bron is niet meer beschikbaar voor jou. Ga terug en kies een andere
 #, fuzzy
 msgid "This step used its whole answer budget."
 msgstr "Deze stap heeft het hele antwoordbudget gebruikt."
+
+msgid "This tool cannot use a login in your chats right now"
+msgstr ""
 
 #, fuzzy
 msgid "This tool needs a login before it can be enabled."
@@ -7448,12 +7750,12 @@ msgid "Unpublished changes"
 msgstr "Niet-gepubliceerde wijzigingen"
 
 #, fuzzy
-msgid "unreadable"
+msgid "Unread"
 msgstr "onleesbaar"
 
 #, fuzzy
-msgid "Unregistered"
-msgstr "Niet geregistreerd"
+msgid "unreadable"
+msgstr "onleesbaar"
 
 #, fuzzy
 msgid "unsupported file type"
@@ -7544,6 +7846,22 @@ msgid "Used by"
 msgstr "Gebruikt door"
 
 #, fuzzy
+msgid "used by {count} agents"
+msgstr "Toegewezen aan agents"
+
+#, fuzzy
+msgid "used by 1 agent"
+msgstr "niet-toegewezen agent"
+
+#, fuzzy
+msgid "used in {count} departments"
+msgstr "die van de afdeling gebruiken"
+
+#, fuzzy
+msgid "used in 1 department"
+msgstr "die van de afdeling gebruiken"
+
+#, fuzzy
 msgid "used this month"
 msgstr "deze maand gebruikt"
 
@@ -7579,13 +7897,48 @@ msgstr "Gebruikersnaam en wachtwoord (Basic)"
 msgid "Users"
 msgstr "Gebruikers"
 
+msgid "Uses {name} — chosen for this agent"
+msgstr ""
+
+msgid "Uses {name} — enabled for the department"
+msgstr ""
+
+msgid "Uses {name} — set up for the department before logins were shared"
+msgstr ""
+
+msgid "Uses {name} — the organisation's login"
+msgstr ""
+
+#, fuzzy
+msgid "Uses the department's earlier setup"
+msgstr "die van de afdeling gebruiken"
+
+msgid "Uses the login of the person in the chat — you have none yet"
+msgstr ""
+
+msgid "Uses your own login {name} in your chats"
+msgstr ""
+
 #, fuzzy
 msgid "Uses your personal subscription — agents on it can only be started manually."
 msgstr "Gebruikt een persoonlijk abonnement — agents hierop kunnen alleen handmatig worden gestart."
 
 #, fuzzy
+msgid "Using the organisation account"
+msgstr "Voor de organisatie"
+
+#, fuzzy
+#| msgid "Answer in your own words"
+msgid "Using your own login"
+msgstr "Antwoord in je eigen woorden"
+
+#, fuzzy
 msgid "value"
 msgstr "waarde"
+
+#, fuzzy
+msgid "Values couldn't be loaded"
+msgstr "Je wachtrij kon niet worden geladen"
 
 #, fuzzy
 msgid "Verification failed"
@@ -7622,6 +7975,13 @@ msgstr "via afdelingshoofd"
 #, fuzzy
 msgid "Visibility"
 msgstr "Zichtbaarheid"
+
+#, fuzzy
+msgid "vs. previous period"
+msgstr "Vorige pagina"
+
+msgid "vs. same period last year"
+msgstr ""
 
 #, fuzzy
 msgid "waiting"
@@ -7662,6 +8022,10 @@ msgstr "wacht op taak"
 #, fuzzy
 msgid "Waiting for task"
 msgstr "Wacht op taak"
+
+#, fuzzy
+msgid "Waiting for the department's approval."
+msgstr "Wacht op goedkeuring voor inhuren"
 
 #, fuzzy
 msgid "Waiting for the next step"
@@ -7868,6 +8232,10 @@ msgid "Wrote a file"
 msgstr "Schreef een bestand"
 
 #, fuzzy
+msgid "Year to date"
+msgstr "tot nu toe vastgelegd"
+
+#, fuzzy
 msgid "Yes, approve"
 msgstr "Ja, goedkeuren"
 
@@ -7938,6 +8306,10 @@ msgstr "Je hebt geen toegang tot Copilot-chat."
 #, fuzzy
 msgid "You don't have permission to view this content."
 msgstr "Je hebt geen toestemming om deze inhoud te bekijken."
+
+#, fuzzy
+msgid "You have no access to this dashboard"
+msgstr "Je hebt geen toegang tot Copilot-chat."
 
 #, fuzzy
 msgid "You hold no seat in any department."
@@ -8094,19 +8466,3 @@ msgstr "Jouw seats"
 #, fuzzy
 msgid "Your work is next door"
 msgstr "Je werk is hiernaast"
-
-#, fuzzy
-msgid "Only an organisation connection counts here. A data source feeds knowledge everyone in the organisation uses, so a personal sign-in is never used for it."
-msgstr "Hier telt alleen een verbinding van de organisatie. Een gegevensbron voedt kennis die iedereen in de organisatie gebruikt, daarom wordt je persoonlijke aanmelding er nooit voor gebruikt."
-
-#, fuzzy
-msgid "Also fits: "
-msgstr "Past ook: "
-
-#, fuzzy
-msgid "Hands over:"
-msgstr "Geeft door:"
-
-#, fuzzy
-msgid "Run agent"
-msgstr "Agent starten"

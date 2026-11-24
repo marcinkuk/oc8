@@ -8,6 +8,7 @@ import { Check, LayoutTemplate, Pencil, Save } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Panel } from "@/components/app-shell";
+import { newId } from "@/lib/utils";
 import { BoardNotices } from "@/components/dashboard/board-notices";
 import { DashboardGrid } from "@/components/dashboard/dashboard-grid";
 import { SavePresetDialog } from "@/components/dashboard/save-preset-dialog";
@@ -27,7 +28,6 @@ import {
   type WidgetType,
 } from "@/lib/hooks";
 import { useT } from "@/lib/i18n";
-import { newId } from "@/lib/utils";
 import { useNotifications } from "@/lib/notifications-api";
 
 export const Route = createFileRoute("/workspace")({
