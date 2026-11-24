@@ -12,3 +12,10 @@ Guidance for AI coding agents working in this repository.
   covers where the bot token lives, the outbound-transport design (address
   ranking + connect-only retry — do not simplify it away), deploying the live
   Portainer stack, and how to health-check polling.
+- Known failures that exist on plain upstream too (don't chase them): backend
+  `tests/approvals/test_reads_go_through_the_scoped_repository.py::test_no_module_loads_an_approval_or_a_clarification_outside_the_repo`
+  (`agents/retire.py` loads `ApprovalRequest`); frontend `tsc --noEmit` reports
+  8 errors (mission-automation, capa-export-wizard); `totp-challenge`
+  resend-timer test fails intermittently under full-suite load.
+- Upstream is `oc8-ai/oc8`; contributions need Conventional Commits plus a
+  `Signed-off-by` DCO line (`git commit -s`).
