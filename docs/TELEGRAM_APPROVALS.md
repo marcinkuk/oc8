@@ -154,7 +154,7 @@ docker run --rm -v <old-project>_pgdata:/from -v oc8_agser_pgdata:/to alpine   s
 Verify with `du -sh` and file counts on both volumes before deploying, take a
 `pg_dump` first, and keep the old volumes until the new stack is confirmed healthy.
 
-### API routes (Portainer 2.39)
+### API routes (Portainer CE 2.45.4, upgraded 2026-11-25)
 
 The create route is not `POST /api/stacks` — that returns `405` with an empty
 body. From the handler routes:
