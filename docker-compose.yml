@@ -23,6 +23,9 @@ x-backend-image: &backend-image
     context: ./backend
     dockerfile: ../Dockerfile.backend
   image: oc8-backend:latest
+  # Built locally, never published — a registry pull would fail and abort a
+  # Portainer auto-update deploy before the build step ever runs.
+  pull_policy: build
 
 x-backend-env: &backend-env
   # SECURITY: `dev` enables POST /api/v1/auth/dev-login, an UNAUTHENTICATED
@@ -452,6 +455,7 @@ services:
       args:
         VITE_API_URL: /api/v1
     image: oc8-frontend:latest
+    pull_policy: build
     environment:
       PORT: "3000"
     depends_on:

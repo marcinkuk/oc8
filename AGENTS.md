@@ -73,6 +73,8 @@ Hard rules for every agent:
   `GET /api/stacks/{id}` must show a non-null `GitConfig` (URL
   `marcinkuk/oc8.git`, ref `refs/heads/main`) and `AutoUpdate.Interval: "5m"`.
 
+`pull_policy: build` on the backend/frontend images is load-bearing: without it Portainer aborts every auto-update deploy at `compose pull` ("pull access denied" for the locally-built images). Do not remove it.
+
 If the record ever shows `GitConfig: null`, restore it (data survives — the
 named volumes are not removed): dump the stack's Env pairs, then
 `DELETE /api/stacks/{id}?endpointId=3&force=true&removeVolumes=false` (the
