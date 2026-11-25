@@ -96,14 +96,14 @@ through Portainer.
 | | |
 |---|---|
 | name / compose project | `oc8_agser` (Portainer uses the stack name as the project name) |
-| id | 38 (endpoint 3 = the local environment) |
+| id | 39 (endpoint 3 = the local environment) |
 | type | 2 — Docker Compose stack |
 | git | `https://github.com/marcinkuk/oc8.git` @ `refs/heads/main`, entry point `docker-compose.yml` |
 | auto-update | interval `5m` + webhook, scheduler job registered |
-| project path | `/data/compose/38` |
-| env | 29 pairs stored on the stack record — Portainer writes them into `/data/compose/38/.env` on every deploy |
+| project path | `/data/compose/39` |
+| env | 30 pairs stored on the stack record — Portainer writes them into `/data/compose/39/.env` on every deploy |
 
-`git pull` in `/data/compose/38` is not the update path: Portainer re-clones the
+`git pull` in `/data/compose/39` is not the update path: Portainer re-clones the
 repo on deploy (and on the 5-minute poll / webhook). `.env` in the project path is
 generated from the stack record, so editing it by hand is lost on the next deploy —
 change the **Env pairs on the stack** instead.
@@ -177,7 +177,7 @@ x-backend-env.OC8_…: required variable … is missing`.
 
 - `capas/` is bind-mounted read-only into backend/scheduler/workers at `/app/capas`.
   Plugin changes: push to `main`, then redeploy the stack (`PUT
-  /api/stacks/38/git/redeploy`) or restart the services — no image rebuild.
+  /api/stacks/39/git/redeploy`) or restart the services — no image rebuild.
 - Core changes (`backend/src/oc8/...`, `frontend/`) need the image rebuilt, which
   Portainer does during deploy. `ghcr.io`/github.com are intermittently unreachable
   from this host over IPv4 — a failed build is normal, retry the deploy.

@@ -47,6 +47,42 @@ configured; `gh auth setup-git` does not help either. Push with
 `git push "https://x-access-token:${GITHUB_TOKEN}@github.com/<remote>.git" <branch>`
 and keep the token out of the stored remote URLs.
 
+## Portainer stack `oc8_agser` — NEVER detach it from GitHub
+
+The live tenant builds from this fork's `main` through Portainer stack
+`oc8_agser` (current id 39, endpoint 3). The stack record MUST stay a
+standalone/repository stack: `https://github.com/marcinkuk/oc8.git` @
+`refs/heads/main`, entry point `docker-compose.yml`, AutoUpdate interval
+`5m`. Pushing a commit to `origin/main` is the only update path — Portainer's
+5-minute poll re-clones the repo and rebuilds backend/frontend images itself.
+
+Hard rules for every agent:
+
+- Never convert this stack to an App Template / web-editor stack and never
+  paste compose content over it. That drops the git link: the stack record
+  then shows `FromAppTemplate: true`, `GitConfig: null`, `AutoUpdate: null`
+  and the 5-minute poll silently stops forever. This happened twice — once on
+  stack 38 (2026-11-23) — and each time the user had to notice the live
+  instance stopped updating.
+- Never clear or shorten `AutoUpdate`, never delete the stack without the
+  user's explicit confirmation.
+- Never run `docker compose up/build` against `/data/compose/39` and never
+  hand-edit `/data/compose/39/.env` — Portainer re-clones the repo and
+  regenerates `.env` from the stack's Env pairs on every deploy.
+- After any deploy-related change, verify the link is intact:
+  `GET /api/stacks/{id}` must show a non-null `GitConfig` (URL
+  `marcinkuk/oc8.git`, ref `refs/heads/main`) and `AutoUpdate.Interval: "5m"`.
+
+If the record ever shows `GitConfig: null`, restore it (data survives — the
+named volumes are not removed): dump the stack's Env pairs, then
+`DELETE /api/stacks/{id}?endpointId=3&force=true&removeVolumes=false` (the
+delete refuses without `endpointId`), then
+`POST /api/stacks/create/standalone/repository?endpointId=3` with `Name`,
+`RepositoryURL`, `RepositoryReferenceName`, `ComposeFile`, the same `Env`
+pairs, and `AutoUpdate: {"Interval":"5m","CreateWebhook":true}`.
+Verify: stack record has GitConfig+AutoUpdate, all 11 containers healthy, and
+the running image carries the newest main commit.
+
 ## Reading schedules on the live tenant
 
 - An agent's cron schedule is a `Trigger` row, not the free-text `Agent.schedule` column.
