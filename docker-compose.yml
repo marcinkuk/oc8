@@ -514,3 +514,5 @@ volumes:
   caddy-config:
   ollama:
   miniodata:
+
+# Portainer CE 2.45.4 (upgraded 2026-11-25): pull_policy above is required for auto-update deploys.
