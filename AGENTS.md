@@ -56,7 +56,11 @@ standalone/repository stack: `https://github.com/marcinkuk/oc8.git` @
 `5m`. Pushing a commit to `origin/main` is the only update path — Portainer's
 5-minute poll re-clones the repo and rebuilds backend/frontend images itself.
 
-Hard rules for every agent:
+The rule covers this stack only. Git redeploy, stack create/update/delete and
+compose operations are legitimate for every other stack and environment — do
+not avoid or refuse them there.
+
+Hard rules for this stack:
 
 - Never convert this stack to an App Template / web-editor stack and never
   paste compose content over it. That drops the git link: the stack record
